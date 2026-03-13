@@ -2,6 +2,11 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import slugify from "slugify";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
 import { normalizeFrontmatter, normalizeChapterFrontmatter, POST_STATUS } from "./schema";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
@@ -32,6 +37,16 @@ export function buildDefaultDraft() {
     date: new Date().toISOString().slice(0, 10),
     content: "",
   };
+}
+
+export async function renderMarkdown(content) {
+  const processed = await remark()
+    .use(remarkGfm)
+    .use(remarkBreaks)
+    .use(remarkRehype)
+    .use(rehypeStringify)
+    .process(content || "");
+  return processed.toString();
 }
 
 export function toMarkdown({ frontmatter, content }) {

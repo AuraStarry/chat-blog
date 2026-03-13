@@ -88,9 +88,9 @@
 ---
 
 ## Next（下一步）
-1. **建立文章與冊的預覽頁 (Renderer)**：
-   - 實作單篇文章頁面渲染（Markdown -> HTML）。
-   - 實作「冊 (Chapter)」頁面渲染（包含 Google Maps 插針與摺疊列表）。
+1. **建立文章與冊的預覽頁 (Renderer)**： ← DOING
+   - [x] 實作單篇文章頁面渲染（Markdown -> HTML）
+   - [ ] 實作「冊 (Chapter)」頁面渲染（包含 Google Maps 插針與摺疊列表） [!]
 2. **補上發布狀態流轉 (Workflow)**：
    - 在 Studio 增加「提交審閱 (Review)」與「正式發布 (Publish)」的按鈕與邏輯。
    - 實作前台文章列表（僅顯示 `published` 狀態的文章）。
