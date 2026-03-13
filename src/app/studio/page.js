@@ -165,7 +165,7 @@ export default async function StudioPage({ searchParams }) {
 
           <div className={styles.actions}>
             <button className={styles.button} type="submit">儲存變更</button>
-            <Link href="/" className={styles.button} style={{ textDecoration: "none", background: "#f4f4f5", color: "#27272a" }}>
+            <Link href="/" className={styles.button} style={{ background: "transparent", color: "#a1a1aa", border: "1px solid #27272a" }}>
               返回首頁
             </Link>
           </div>

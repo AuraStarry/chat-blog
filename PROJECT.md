@@ -104,4 +104,4 @@
 - 2026-03-01：完成最小可跑環境初始化（Next.js App Router / JavaScript / Tailwind / ESLint），並加入 `sass`, `gray-matter`, `remark*`, `rehype-stringify`, `zod`, `date-fns`, `slugify` 依賴；建立 `content/posts` 與 `src/lib/content`、`src/lib/publish` 目錄骨架。
 - 2026-03-01：完成第一版內容層與共編頁骨架：新增 frontmatter schema、MD 讀寫/儲存 utility、`/studio` 手機單欄 GUI（可儲存 draft 並寫回 `content/posts/<slug>.md`）。
 - 2026-03-13：實作「AI/機器介面」規範：新增 `listAllPosts` utility 與 `/api/content`, `/api/content/[slug]` 路由，支援結構化資料打撈；更新 `PROJECT.md` 將機器介面納入核心規格。
-- 2026-03-13：完成「地點資訊」與「冊 (Chapter)」模式的資料層實作，包含 Schema 擴充、EDITING_SKILL 更新及相關 API 路由。
+- 2026-03-13：修復 `/studio` 路由 404 問題（重新命名目錄並移除 Route Group 衝突）；實作 Studio 頁面的草稿讀取功能，支援透過 `?saved=slug` 載入現有內容進行編輯。
