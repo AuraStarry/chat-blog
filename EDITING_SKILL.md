@@ -31,16 +31,16 @@
 - **Cover Image**：若對話中有提到圖片，Agent 需在 frontmatter 預留 `cover_image` 位置，並在 `cover_image_alt` 寫下描述。
 - **內文圖片**：使用標準 Markdown 語法 `![alt](url)`，並附帶簡單的圖說（caption）。
 
-## 4. 地點資訊處理
-- **精確檢索**：若內容提及特定店家或地標，Agent 必須使用 `web_search` 查找該地點的：
-  - **正確店家名稱**：確保非僅地址。
-  - **Google Maps 連結**：優先使用包含店家名稱的分享連結。
+## 4. 地點與地標 (Places / POI) 資訊處理
+- **精確檢索**：若內容提及特定店家、名勝古蹟、或任何地圖上的「地標 (Place)」，Agent 必須使用 `web_search` 查找該地點的：
+  - **正式地標名稱 (Place Name)**：確保為 Google Maps 上註冊的正式名稱。
+  - **Google Maps 連結**：優先使用包含地標名稱的分享連結。
   - **完整地址**：用於輔助顯示。
 - **欄位存儲**：將資訊填入 frontmatter：
-  - `location_name`: 店家或地標名稱。
+  - `location_name`: 地標正式名稱。
   - `location_address`: 實際地址。
   - `location_url`: Google Maps 連結。
-- **編輯輔助**：Agent 在起草內容時，若發現地點資訊不全，應主動搜尋補齊，而非僅填寫對話中出現的片段地址。
+- **編輯輔助**：Agent 在起草內容時，必須確保 `location_name` 的精確度，因為這會直接影響地圖嵌入 (Embed) 的搜尋成功率。
 
 ## 5. 「冊 (Chapter)」模式編輯
 - **集結成冊**：當 Gore 要求「將這幾篇集結成冊」或「建立一個關於...的 Chapter」時，Agent 需建立一個 Chapter MD。
