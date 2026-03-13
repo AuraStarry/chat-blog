@@ -107,3 +107,4 @@
 - 2026-03-01：完成第一版內容層與共編頁骨架：新增 frontmatter schema、MD 讀寫/儲存 utility、`/studio` 手機單欄 GUI（可儲存 draft 並寫回 `content/posts/<slug>.md`）。
 - 2026-03-13：實作「AI/機器介面」規範：新增 `listAllPosts` utility 與 `/api/content`, `/api/content/[slug]` 路由，支援結構化資料打撈；更新 `PROJECT.md` 將機器介面納入核心規格。
 - 2026-03-13：修復 `/studio` 路由 404 問題（重新命名目錄並移除 Route Group 衝突）；實作 Studio 頁面的草稿讀取功能，支援透過 `?saved=slug` 載入現有內容進行編輯。
+- 2026-03-13：優化 Post 頁面排版：移除作者欄、精簡標題區塊、修正 Summary 重複顯示問題、增加 Google Maps Embed 預留區塊。同時更新 `EDITING_SKILL.md`，要求 Agent 必須搜尋精確的店家名稱與 Google Maps 分享連結。
