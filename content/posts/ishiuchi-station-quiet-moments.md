@@ -1,14 +1,16 @@
 ---
 title: 在荒涼與精緻間平衡：石打車站的靜謐時光
 slug: ishiuchi-station-quiet-moments
-date: '2026-03-13'
+status: published
 summary: 探索日本石打車站，一個旅客稀少、無人看管卻保有精緻陳舊感的秘境車站。
-status: draft
+category: ''
+tags: []
 cover_image: /uploads/20260313-ishiuchi-station-platform.jpg
 cover_image_alt: 日本石打車站月台，Gore 與夥伴背對背坐在長椅上
+date: '2026-03-13'
 location_name: 石打駅 (Ishiuchi Station)
 location_address: 日本新潟縣南魚沼市石打
-location_url: https://maps.app.goo.gl/3A7L6N5mY1N2D8S8A
+location_url: 'https://maps.app.goo.gl/3A7L6N5mY1N2D8S8A'
 ---
 
 ## 荒涼中的精緻平衡
