@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./page.module.scss";
 
@@ -8,16 +8,37 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    let stored = localStorage.getItem("studio_password");
+    if (!stored) {
+      stored = prompt("請輸入編輯密碼：");
+      if (stored) {
+        localStorage.setItem("studio_password", stored);
+      }
+    }
+    setPassword(stored || "");
+  }, []);
 
   async function handleSubmit(formData) {
     setIsSaving(true);
     setSaveMessage("");
     setError("");
 
+    // Append password to formData
+    formData.set("edit_password", password);
+
     try {
       const result = await saveAction(formData);
       if (result?.error) {
-        setError(result.error);
+        if (result.error === "AUTH_FAILED") {
+          localStorage.removeItem("studio_password");
+          alert(result.message || "驗證失敗，請重試。");
+          window.location.reload();
+          return;
+        }
+        setError(result.message || result.error);
       } else {
         setSaveMessage("儲存成功！Git Commit 已送出，Vercel 正在部署中...");
         // Clear message after 5 seconds
@@ -28,6 +49,16 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
     } finally {
       setIsSaving(false);
     }
+  }
+
+  // If no password, don't show the form (it will prompt in useEffect)
+  if (typeof window !== "undefined" && !password && !localStorage.getItem("studio_password")) {
+    return (
+      <div className={styles.card} style={{ textAlign: "center", padding: "40px" }}>
+        <p>需要編輯密碼才能繼續。</p>
+        <button className={styles.button} onClick={() => window.location.reload()}>重新輸入</button>
+      </div>
+    );
   }
 
   return (

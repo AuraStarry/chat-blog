@@ -6,6 +6,10 @@ import styles from "./page.module.scss";
 
 export const metadata = {
   title: "Studio | chat-blog",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function StudioPage({ searchParams }) {

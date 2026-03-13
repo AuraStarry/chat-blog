@@ -4,6 +4,11 @@ import { saveDraftFromForm } from "@/lib/content/markdown";
 
 export async function createDraftAction(formData) {
   try {
+    const password = formData.get("edit_password");
+    if (password !== "百變怪") {
+      return { error: "AUTH_FAILED", message: "編輯密碼錯誤，存取遭拒。" };
+    }
+
     const payload = {
       title: formData.get("title"),
       slug: formData.get("slug"),
