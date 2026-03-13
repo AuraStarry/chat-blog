@@ -1,22 +1,23 @@
 ---
-title: "延平北路邊的昭和餘暉：秋波名曲珈琲"
-slug: "qiubo-coffee-taipei"
-status: "draft"
-summary: "在大同區的一隅，遇見時光倒流的音樂與咖啡。這裡不只是咖啡廳，更像是一座收藏昭和記憶的博物館。"
-category: "Cafe"
+title: 延平北路邊的昭和餘暉：秋波名曲珈琲
+slug: qiubo-coffee-taipei
+status: draft
+summary: 在大同區的一隅，遇見時光倒流的音樂與咖啡。這裡不只是咖啡廳，更像是一座收藏昭和記憶的博物館。
+category: Cafe
 tags:
-  - "Taipei"
-  - "昭和感"
-  - "咖啡廳"
-cover_image: "/uploads/qiubo-cover.jpg"
-cover_image_alt: "秋波名曲珈琲的外觀紅底招牌"
-date: "2026-03-13"
-location_name: "秋波名曲珈琲"
-location_address: "10375台灣台北市大同區昌吉街218號"
-location_url: "https://www.google.com/maps/place/10375%E5%8F%B0%E7%81%A3%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%90%8C%E5%8D%80%E6%98%8C%E5%90%89%E8%A1%97218%E8%99%9F"
+  - Taipei
+  - 昭和感
+  - 咖啡廳
+cover_image: /uploads/qiubo-cover.jpg
+cover_image_alt: 秋波名曲珈琲的外觀紅底招牌
+date: '2026-03-13'
+location_name: 秋波名曲珈琲
+location_address: 10375台灣台北市大同區昌吉街218號
+location_url: >-
+  https://www.google.com/maps/place/10375%E5%8F%B0%E7%81%A3%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%90%8C%E5%8D%80%E6%98%8C%E5%90%89%E8%A1%97218%E8%99%9F
 ---
 
-# 延平北路邊的昭和餘暉：秋波名曲珈琲
+# 延平北路邊的昭和餘暉：秋波名曲珈琲 123
 在大同區昌吉街的轉角，**秋波名曲珈琲**以其標誌性的紅底金字招牌，靜靜地守候著那段被遺忘的時光。
 
 ## 昭和感的感官饗宴
