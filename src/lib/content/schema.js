@@ -26,7 +26,10 @@ export const postFrontmatterSchema = z.object({
   tags: coerceStringArray.default([]),
   cover_image: z.string().trim().default(""),
   cover_image_alt: z.string().trim().default(""),
-  date: z.string().trim().default(""),
+  date: z.preprocess((val) => {
+    if (val instanceof Date) return val.toISOString().slice(0, 10);
+    return val;
+  }, z.string().trim().default("")),
   location_name: z.string().trim().default(""),
   location_address: z.string().trim().default(""),
   location_url: z.string().trim().default(""),
@@ -40,7 +43,10 @@ export const chapterFrontmatterSchema = z.object({
   title: z.string().trim().min(1, "title is required"),
   slug: z.string().trim().min(1, "slug is required"),
   status: z.enum([POST_STATUS.DRAFT, POST_STATUS.REVIEW, POST_STATUS.PUBLISHED]),
-  date: z.string().trim().default(""),
+  date: z.preprocess((val) => {
+    if (val instanceof Date) return val.toISOString().slice(0, 10);
+    return val;
+  }, z.string().trim().default("")),
   posts: z.array(z.string()).default([]), // List of post slugs
 });
 
