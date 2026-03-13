@@ -61,7 +61,7 @@ export default async function HomePage() {
                 {draftPosts.map((post) => (
                   <Link 
                     key={post.slug} 
-                    href={`/studio?saved=${post.slug}`}
+                    href={`/post/${post.slug}`}
                     className="flex items-center justify-between p-4 rounded-xl bg-white border border-zinc-200 hover:border-zinc-300 transition-colors shadow-sm"
                   >
                     <div>
