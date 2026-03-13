@@ -72,30 +72,32 @@
 ### 已確認
 - 使用者偏好保留 Markdown 以利未來擴充、遷移、版本管理
 - 需提供完整 GUI 進行內容與設定編輯（含 cover image）
+- **部署策略**：部署於 Vercel，採用 **Git-as-a-CMS** 架構。
+- **儲存機制**：Studio 透過 GitHub API 直接對 Repo 進行 Commit，觸發 Vercel 自動部署。
+- **媒體存儲**：採用 `chat-blog/public/uploads/` 作為本地媒體存儲目錄。
 
 ### 尚未確認（下一階段討論）
-- 實際開發環境與框架選型
-- 是否/如何參照 `Life-Hiker-Studio` 的 `Agent.md` 架構
-- 建置/部署流程與實際主機策略
-- 媒體儲存與檔案路徑策略：採用 `chat-blog/public/uploads/` 作為本地媒體存儲目錄。
+- 是否導入更進階的內容預覽（Deploy Previews）
+- 媒體上傳是否需要串接外部 Storage（如 Cloudinary/Vercel Blob）以避免 Repo 過大
 
 ---
 
 ## 目前階段
 - **Phase**：功能性骨架開發（Functional Backbone Development）
-- **狀態**：✅ 基礎環境、內容讀寫、AI 機器介面、地點與冊 (Chapter) 資料架構已完成。
+- **狀態**：✅ 基礎環境、內容讀寫、AI 機器介面、地點與冊 (Chapter) 資料架構已完成；🚀 正在串接 Git-as-a-CMS 儲存流程。
 
 ---
 
 ## Next（下一步）
-1. **建立文章與冊的預覽頁 (Renderer)**： ✅
-   - [x] 實作單篇文章頁面渲染（Markdown -> HTML）
-   - [x] 實作「冊 (Chapter)」頁面渲染（包含 Google Maps 插針與摺疊列表）
+1. **實作 Git-as-a-CMS 儲存流程**： ✅
+   - [x] 建立 `src/lib/publish/github.js` 封裝 GitHub API 操作。
+   - [x] 整合 Studio 的儲存 Action，支援 GitHub Commit 模式。
+   - [x] 增加開發環境 (Local FS) 與生產環境 (GitHub API) 的切換邏輯。
 2. **補上發布狀態流轉 (Workflow)**： ← DOING
    - [ ] 在 Studio 增加「提交審閱 (Review)」與「正式發布 (Publish)」的按鈕與邏輯。 [!]
    - [ ] 實作前台文章列表（僅顯示 `published` 狀態的文章）。
 3. **媒體管理器 (Media Picker)**：
-   - 實作一個簡單的 UI 讓 Studio 能列出並選擇 `public/uploads` 內的圖片。
+   - [ ] 實作一個簡單的 UI 讓 Studio 能列出並選擇 `public/uploads` 內的圖片。
 
 ---
 

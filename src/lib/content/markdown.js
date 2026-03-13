@@ -8,9 +8,12 @@ import remarkBreaks from "remark-breaks";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import { normalizeFrontmatter, normalizeChapterFrontmatter, POST_STATUS } from "./schema";
+import { commitFile } from "../publish/github";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 const CHAPTERS_DIR = path.join(process.cwd(), "content", "chapters");
+
+const IS_GIT_CMS = !!process.env.GITHUB_TOKEN;
 
 function ensureMdExtension(filename) {
   return filename.endsWith(".md") ? filename : `${filename}.md`;
@@ -81,13 +84,23 @@ export async function saveDraftFromForm(input) {
     content: input.content || "",
   });
 
-  await fs.mkdir(POSTS_DIR, { recursive: true });
-  const filePath = path.join(POSTS_DIR, ensureMdExtension(slug));
-  await fs.writeFile(filePath, markdown, "utf8");
+  const relativePath = `content/posts/${ensureMdExtension(slug)}`;
+
+  if (IS_GIT_CMS) {
+    await commitFile({
+      path: relativePath,
+      content: markdown,
+      message: `studio: save post "${frontmatter.title}"`,
+    });
+  } else {
+    await fs.mkdir(POSTS_DIR, { recursive: true });
+    const filePath = path.join(POSTS_DIR, ensureMdExtension(slug));
+    await fs.writeFile(filePath, markdown, "utf8");
+  }
 
   return {
     slug,
-    filePath,
+    path: relativePath,
   };
 }
 
@@ -136,11 +149,21 @@ export async function saveChapter(input) {
   });
 
   const markdown = matter.stringify(input.content || "", frontmatter);
-  await fs.mkdir(CHAPTERS_DIR, { recursive: true });
-  const filePath = path.join(CHAPTERS_DIR, ensureMdExtension(slug));
-  await fs.writeFile(filePath, markdown, "utf8");
+  const relativePath = `content/chapters/${ensureMdExtension(slug)}`;
 
-  return { slug, filePath };
+  if (IS_GIT_CMS) {
+    await commitFile({
+      path: relativePath,
+      content: markdown,
+      message: `studio: save chapter "${frontmatter.title}"`,
+    });
+  } else {
+    await fs.mkdir(CHAPTERS_DIR, { recursive: true });
+    const filePath = path.join(CHAPTERS_DIR, ensureMdExtension(slug));
+    await fs.writeFile(filePath, markdown, "utf8");
+  }
+
+  return { slug, path: relativePath };
 }
 
 export async function readChapterBySlug(slug) {
