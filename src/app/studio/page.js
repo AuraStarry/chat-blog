@@ -82,7 +82,20 @@ export default async function StudioPage({ searchParams }) {
           <p className={styles.note}>手機優先、單欄、UI 編輯；底層自動寫回 Markdown。</p>
         </section>
 
-        {saved ? <p className={styles.success}>正在編輯：{saved}.md</p> : null}
+        {saved ? (
+          <div className={styles.card} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <p className={styles.success} style={{ margin: 0 }}>正在編輯：{saved}.md</p>
+            <a 
+              href={`/post/${saved}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={styles.button}
+              style={{ padding: "4px 12px", fontSize: "12px", background: "#1e1e2e", border: "1px solid #313244" }}
+            >
+              查看預覽 ↗
+            </a>
+          </div>
+        ) : null}
 
         <form
           className={styles.card}
