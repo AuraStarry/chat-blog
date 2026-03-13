@@ -88,12 +88,12 @@
 ---
 
 ## Next（下一步）
-1. **建立文章與冊的預覽頁 (Renderer)**： ← DOING
+1. **建立文章與冊的預覽頁 (Renderer)**： ✅
    - [x] 實作單篇文章頁面渲染（Markdown -> HTML）
-   - [ ] 實作「冊 (Chapter)」頁面渲染（包含 Google Maps 插針與摺疊列表） [!]
-2. **補上發布狀態流轉 (Workflow)**：
-   - 在 Studio 增加「提交審閱 (Review)」與「正式發布 (Publish)」的按鈕與邏輯。
-   - 實作前台文章列表（僅顯示 `published` 狀態的文章）。
+   - [x] 實作「冊 (Chapter)」頁面渲染（包含 Google Maps 插針與摺疊列表）
+2. **補上發布狀態流轉 (Workflow)**： ← DOING
+   - [ ] 在 Studio 增加「提交審閱 (Review)」與「正式發布 (Publish)」的按鈕與邏輯。 [!]
+   - [ ] 實作前台文章列表（僅顯示 `published` 狀態的文章）。
 3. **媒體管理器 (Media Picker)**：
    - 實作一個簡單的 UI 讓 Studio 能列出並選擇 `public/uploads` 內的圖片。
 
