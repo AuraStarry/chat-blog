@@ -95,6 +95,7 @@
    - [x] 增加開發環境 (Local FS) 與生產環境 (GitHub API) 的切換邏輯。
 2. **補上發布狀態流轉 (Workflow)**： ← DOING
    - [ ] 在 Studio 增加「提交審閱 (Review)」與「正式發布 (Publish)」的按鈕與邏輯。 [!]
+   - [x] 優化 Studio 儲存後的 UX：移除重導，改為原地顯示成功提示並提醒部署延遲。
    - [ ] 實作前台文章列表（僅顯示 `published` 狀態的文章）。
 3. **媒體管理器 (Media Picker)**：
    - [ ] 實作一個簡單的 UI 讓 Studio 能列出並選擇 `public/uploads` 內的圖片。

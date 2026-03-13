@@ -40,9 +40,9 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
         }
         setError(result.message || result.error);
       } else {
-        setSaveMessage("儲存成功！Git Commit 已送出，Vercel 正在部署中...");
-        // Clear message after 5 seconds
-        setTimeout(() => setSaveMessage(""), 5000);
+        setSaveMessage("儲存成功！Git Commit 已送出，Vercel 正在部署中（約需 1-2 分鐘生效）。");
+        // Scroll to top to see message
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } catch (e) {
       setError("儲存失敗：" + e.message);
