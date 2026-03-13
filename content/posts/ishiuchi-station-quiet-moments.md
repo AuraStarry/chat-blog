@@ -1,7 +1,7 @@
 ---
 title: 在荒涼與精緻間平衡：石打車站的靜謐時光
 slug: ishiuchi-station-quiet-moments
-date: 2026-03-13
+date: '2026-03-13'
 summary: 探索日本石打車站，一個旅客稀少、無人看管卻保有精緻陳舊感的秘境車站。
 status: draft
 cover_image: /uploads/20260313-ishiuchi-station-platform.jpg
