@@ -7,8 +7,8 @@ import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
-import { normalizeFrontmatter, normalizeChapterFrontmatter, POST_STATUS } from "./schema";
-import { commitFile } from "../publish/github";
+import { normalizeFrontmatter, normalizeChapterFrontmatter, POST_STATUS } from "./schema.js";
+import { commitFile } from "../publish/github.js";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 const CHAPTERS_DIR = path.join(process.cwd(), "content", "chapters");
