@@ -14,48 +14,54 @@ export default function ChapterMap({ locations }) {
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     if (!apiKey) {
-      setError('Missing API Key (NEXT_PUBLIC_GOOGLE_MAPS_API_KEY)');
+      setError('Missing NEXT_PUBLIC_GOOGLE_MAPS_API_KEY');
       return;
     }
-
-    setOptions({
-      apiKey: apiKey,
-      version: 'weekly'
-    });
 
     let isMounted = true;
 
     const initMap = async () => {
       try {
-        // Use the functional setOptions and importLibrary as required by v2
-        setOptions({ apiKey, version: 'weekly' });
+        // Initialize loader options
+        setOptions({
+          apiKey: apiKey,
+          version: 'weekly',
+          language: 'zh-TW',
+        });
 
-        // First, ensure the core Maps JavaScript API is loaded
-        const mapsLib = await importLibrary('maps');
-        
+        // Load libraries
+        const [mapsLib, geocodingLib, markerLib] = await Promise.all([
+          importLibrary('maps'),
+          importLibrary('geocoding'),
+          importLibrary('marker')
+        ]);
+
         if (!isMounted || !mapRef.current) return;
 
-        // Use the returned classes from the library, which is the most robust way in v2
+        // Defensive check for constructors
+        if (!mapsLib || typeof mapsLib.Map !== 'function') {
+          throw new Error('Google Maps "Map" class not found. Check if your API Key has "Maps JavaScript API" enabled.');
+        }
+
         const MapClass = mapsLib.Map;
         const LatLngBoundsClass = mapsLib.LatLngBounds;
+        const GeocoderClass = geocodingLib.Geocoder;
+        const MarkerClass = markerLib.Marker;
+        const SymbolPathEnum = markerLib.SymbolPath;
 
         const mapInstance = new MapClass(mapRef.current, {
           center: { lat: 37.05, lng: 138.85 },
           zoom: 11,
           disableDefaultUI: true,
           zoomControl: true,
-          styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] }]
+          styles: [
+            {
+              featureType: "poi",
+              elementType: "labels",
+              stylers: [{ visibility: "off" }]
+            }
+          ]
         });
-
-        // Load Geocoding and Marker libraries
-        const [geocodingLib, markerLib] = await Promise.all([
-          importLibrary('geocoding'),
-          importLibrary('marker')
-        ]);
-
-        const GeocoderClass = geocodingLib.Geocoder;
-        const MarkerClass = markerLib.Marker; // Legacy Marker is in 'marker' lib
-        const SymbolPathEnum = markerLib.SymbolPath;
 
         const geocoder = new GeocoderClass();
         const bounds = new LatLngBoundsClass();
@@ -117,7 +123,9 @@ export default function ChapterMap({ locations }) {
 
     return () => {
       isMounted = false;
-      markersRef.current.forEach(m => m.setMap(null));
+      markersRef.current.forEach(m => {
+        if (m && typeof m.setMap === 'function') m.setMap(null);
+      });
       markersRef.current = [];
     };
   }, [locations]);
@@ -127,9 +135,30 @@ export default function ChapterMap({ locations }) {
       <div ref={mapRef} className="w-full h-full" />
       
       {error && (
-        <div className="absolute inset-0 bg-slate-50 flex flex-col items-center justify-center p-6 text-center z-20">
-          <p className="text-xs font-bold text-slate-500 mb-2">地圖載入失敗</p>
-          <p className="text-[10px] text-slate-400 font-mono max-w-xs break-all">{error}</p>
+        <div className="absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center z-20">
+          <div className="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4 text-xl">⚠️</div>
+          <p className="text-sm font-bold text-slate-900 mb-2">地圖初始化失敗</p>
+          <p className="text-xs text-slate-500 max-w-xs leading-relaxed mb-6">
+            {error.includes('ApiProjectMapError') 
+              ? 'Google Maps API Key 權限不足或未啟用帳單。請檢查 Google Cloud Console 設定。' 
+              : error}
+          </p>
+          <div className="flex flex-col gap-2 w-full max-w-[200px]">
+            <a 
+              href="https://console.cloud.google.com/google/maps-apis/credentials" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-bold"
+            >
+              檢查 API Key 權限
+            </a>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="text-slate-400 text-[10px] py-2 hover:text-slate-600"
+            >
+              重新整理頁面
+            </button>
+          </div>
         </div>
       )}
 
