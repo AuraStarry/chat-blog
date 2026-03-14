@@ -58,10 +58,9 @@ export default async function ChapterPage({ params }) {
                 </div>
               </summary>
               <div className="px-6 pb-8 pt-2 border-t border-slate-50">
-                <div 
-                  className="prose prose-slate max-w-none"
-                  dangerouslySetInnerHTML={{ __html: post.htmlContent }} 
-                />
+                <div className="prose prose-slate max-w-none">
+                  {post.htmlContent.substring(0, 100)}...
+                </div>
               </div>
             </details>
           ))}
