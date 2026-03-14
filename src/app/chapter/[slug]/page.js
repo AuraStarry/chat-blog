@@ -45,9 +45,9 @@ export default async function ChapterPage({ params }) {
         </header>
 
         {/* Map Area */}
-        {locations.length > 0 && (
+        {/* {locations.length > 0 && (
           <ChapterMap locations={locations} />
-        )}
+        )} */}
 
         <main className="space-y-6">
           {renderedPosts.map((post, idx) => {
