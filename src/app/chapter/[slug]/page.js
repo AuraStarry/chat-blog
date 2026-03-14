@@ -16,10 +16,13 @@ export default async function ChapterPage({ params }) {
 
   // Pre-render all post content to avoid async rendering issues in the loop
   const renderedPosts = await Promise.all(
-    posts.map(async (post) => ({
-      ...post,
-      htmlContent: await renderMarkdown(post.content)
-    }))
+    posts.map(async (post) => {
+      const html = await renderMarkdown(post.content);
+      return {
+        ...post,
+        htmlContent: html
+      };
+    })
   );
 
   // Collect locations for the map
@@ -44,10 +47,9 @@ export default async function ChapterPage({ params }) {
           </div>
         </header>
 
-        {/* Map Area */}
-        {/* {locations.length > 0 && (
+        {locations.length > 0 && (
           <ChapterMap locations={locations} />
-        )} */}
+        )}
 
         <main className="space-y-6">
           {renderedPosts.map((post, idx) => {
