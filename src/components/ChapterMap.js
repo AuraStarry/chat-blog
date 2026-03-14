@@ -22,7 +22,7 @@ export default function ChapterMap({ locations }) {
         </div>
         
         {/* Interactive Overlay */}
-        <div className="absolute inset-0 p-8">
+        <div className="absolute inset-0 p-8 pointer-events-none">
           <div className="relative w-full h-full">
             {locations.map((loc, idx) => {
               // Simulated distribution
@@ -38,7 +38,7 @@ export default function ChapterMap({ locations }) {
               return (
                 <div 
                   key={idx} 
-                  className="absolute transition-all duration-300"
+                  className="absolute transition-all duration-300 pointer-events-auto"
                   style={{ 
                     top: `${Math.min(80, Math.max(20, top))}%`, 
                     left: `${Math.min(80, Math.max(20, left))}%`,
