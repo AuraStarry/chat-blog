@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { listAllPosts } from "@/lib/content/markdown";
+import PrivateDrafts from "./PrivateDrafts";
 
 export default async function HomePage() {
   const posts = await listAllPosts();
@@ -54,26 +55,7 @@ export default async function HomePage() {
             </div>
           )}
 
-          {draftPosts.length > 0 && (
-            <div className="space-y-8 pt-12 border-t border-zinc-200">
-              <h2 className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Drafts (Private)</h2>
-              <div className="grid gap-6">
-                {draftPosts.map((post) => (
-                  <Link 
-                    key={post.slug} 
-                    href={`/post/${post.slug}`}
-                    className="flex items-center justify-between p-4 rounded-xl bg-white border border-zinc-200 hover:border-zinc-300 transition-colors shadow-sm"
-                  >
-                    <div>
-                      <h4 className="font-bold text-zinc-800">{post.title}</h4>
-                      <p className="text-xs text-zinc-400 mt-1">{post.date} · {post.status}</p>
-                    </div>
-                    <span className="text-zinc-300">→</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
+          <PrivateDrafts posts={draftPosts} />
         </section>
 
         <footer className="mt-24 pt-8 border-t border-zinc-100 text-center">
