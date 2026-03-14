@@ -48,6 +48,7 @@ export default async function ChapterPage({ params }) {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20">
+      <div className="bg-yellow-400 p-2 text-black text-center font-bold">DEPLOYMENT CHECK: V4</div>
       <div className="max-w-2xl mx-auto px-4 py-12 md:py-20">
         <header className="mb-12">
           <h1 className="text-4xl font-black mb-4 tracking-tight">{frontmatter.title}</h1>
