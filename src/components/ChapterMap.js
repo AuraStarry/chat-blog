@@ -164,7 +164,7 @@ export default function ChapterMap({ locations }) {
       });
       markersRef.current = [];
     };
-  }, [locations]);
+  }, [locations, isVisible]);
 
   return (
     <div 
