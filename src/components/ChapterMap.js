@@ -27,7 +27,7 @@ export default function ChapterMap({ locations }) {
 
     const initMap = async () => {
       try {
-        const [{ Map, LatLngBounds }, { Geocoder }, { Marker, SymbolPath }] = await Promise.all([
+        const [mapsLib, geocodingLib, markerLib] = await Promise.all([
           importLibrary('maps'),
           importLibrary('geocoding'),
           importLibrary('marker')
@@ -35,11 +35,18 @@ export default function ChapterMap({ locations }) {
 
         if (!isMounted || !mapRef.current) return;
 
+        // Use standard way to access libraries to avoid destructing issues across versions
+        const { Map, LatLngBounds } = mapsLib;
+        const { Geocoder } = geocodingLib;
+        const { Marker, SymbolPath } = markerLib;
+
         const mapInstance = new Map(mapRef.current, {
           center: { lat: 37.05, lng: 138.85 },
           zoom: 11,
           disableDefaultUI: true,
           zoomControl: true,
+          // Advanced markers technically require a Map ID, but we use legacy Marker for simplicity
+          // mapId: "DEMO_MAP_ID", 
           styles: [
             {
               featureType: "poi",
