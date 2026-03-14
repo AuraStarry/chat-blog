@@ -70,15 +70,14 @@ export default function ChapterMap({ locations }) {
         if (!isMounted || !mapRef.current) return;
 
         // Use the classes directly from the returned library objects
-        const MapClass = mapsLib.Map;
-        const LatLngBoundsClass = mapsLib.LatLngBounds;
-        const GeocoderClass = geocodingLib.Geocoder;
+        // Some classes might be on the library object itself, others on window.google.maps
+        const maps = window.google.maps;
         
-        // Marker and SymbolPath are usually in the maps library
-        // Important: In newer JS SDK, Marker is often accessed via mapsLib.Marker
-        // but we need to check if it's actually there.
-        const MarkerClass = mapsLib.Marker;
-        const SymbolPathEnum = mapsLib.SymbolPath;
+        const MapClass = mapsLib.Map || maps.Map;
+        const LatLngBoundsClass = mapsLib.LatLngBounds || maps.LatLngBounds;
+        const GeocoderClass = geocodingLib.Geocoder || maps.Geocoder;
+        const MarkerClass = mapsLib.Marker || maps.Marker;
+        const SymbolPathEnum = mapsLib.SymbolPath || maps.SymbolPath;
 
         console.log('[ChapterMap] Constructor check:', {
           Map: typeof MapClass,
@@ -87,8 +86,8 @@ export default function ChapterMap({ locations }) {
           Marker: typeof MarkerClass
         });
 
-        if (!MapClass || !GeocoderClass || !MarkerClass) {
-          throw new Error(`缺少必要的建構子 (Map:${!!MapClass}, Geocoder:${!!GeocoderClass}, Marker:${!!MarkerClass})`);
+        if (!MapClass || !GeocoderClass || !MarkerClass || !LatLngBoundsClass) {
+          throw new Error(`缺少必要的建構子 (Map:${!!MapClass}, Geocoder:${!!GeocoderClass}, Marker:${!!MarkerClass}, Bounds:${!!LatLngBoundsClass})`);
         }
 
         const mapInstance = new MapClass(mapRef.current, {
