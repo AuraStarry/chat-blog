@@ -14,12 +14,18 @@ export default async function ChapterPage({ params }) {
 
   const { frontmatter, posts } = chapter;
 
-  // Pre-render all post content to avoid async rendering issues in the loop
+  // Pre-render all post content
   const renderedPosts = await Promise.all(
     posts.map(async (post) => {
       const html = await renderMarkdown(post.content);
       return {
-        ...post,
+        slug: post.frontmatter.slug,
+        title: post.frontmatter.title,
+        summary: post.frontmatter.summary,
+        cover_image: post.frontmatter.cover_image,
+        location_name: post.frontmatter.location_name,
+        location_address: post.frontmatter.location_address,
+        location_url: post.frontmatter.location_url,
         htmlContent: html
       };
     })
@@ -54,17 +60,17 @@ export default async function ChapterPage({ params }) {
         <main className="space-y-6">
           {renderedPosts.map((post, idx) => {
             return (
-              <details key={post.frontmatter.slug} id={post.frontmatter.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 scroll-mt-8">
+              <details key={post.slug} id={post.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 scroll-mt-8">
                 <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                   <div className="flex items-start gap-4">
                     <span className="text-slate-300 font-mono text-lg mt-1">{(idx + 1).toString().padStart(2, '0')}</span>
                     <div>
                       <h3 className="text-xl font-bold group-open:text-slate-900 transition-colors">
-                        {post.frontmatter.title}
+                        {post.title}
                       </h3>
-                      {post.frontmatter.summary && !post.frontmatter.title.includes(post.frontmatter.summary) && (
+                      {post.summary && !post.title.includes(post.summary) && (
                         <p className="text-sm text-slate-500 mt-1 line-clamp-1 group-open:hidden">
-                          {post.frontmatter.summary}
+                          {post.summary}
                         </p>
                       )}
                     </div>
@@ -75,10 +81,10 @@ export default async function ChapterPage({ params }) {
                 </summary>
                 
                 <div className="px-6 pb-8 pt-2 border-t border-slate-50">
-                  {post.frontmatter.cover_image && (
+                  {post.cover_image && (
                     <img 
-                      src={post.frontmatter.cover_image} 
-                      alt={post.frontmatter.title}
+                      src={post.cover_image} 
+                      alt={post.title}
                       className="w-full aspect-video object-cover rounded-xl mb-8 bg-slate-50"
                     />
                   )}
@@ -91,17 +97,17 @@ export default async function ChapterPage({ params }) {
                     dangerouslySetInnerHTML={{ __html: post.htmlContent }} 
                   />
 
-                  {post.frontmatter.location_name && (
+                  {post.location_name && (
                     <div className="mt-12 pt-8 border-t border-slate-100 flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">📍</span>
                         <div>
-                          <div className="text-sm font-bold text-slate-900">{post.frontmatter.location_name}</div>
-                          <div className="text-xs text-slate-500">{post.frontmatter.location_address}</div>
+                          <div className="text-sm font-bold text-slate-900">{post.location_name}</div>
+                          <div className="text-xs text-slate-500">{post.location_address}</div>
                         </div>
                       </div>
                       <a 
-                        href={post.frontmatter.location_url}
+                        href={post.location_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="shrink-0 bg-slate-900 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-slate-800 transition-colors"
@@ -113,7 +119,7 @@ export default async function ChapterPage({ params }) {
                   
                   <div className="mt-10 text-center">
                     <a 
-                      href={`/post/${post.frontmatter.slug}`}
+                      href={`/post/${post.slug}`}
                       className="text-sm text-slate-400 font-medium hover:text-slate-900 transition-colors flex items-center justify-center gap-1"
                     >
                       閱讀全文 ↗
