@@ -1,6 +1,12 @@
 import { readChapterBySlug, renderMarkdown } from "@/lib/content/markdown";
 import { notFound } from "next/navigation";
-import ChapterMap from "@/components/ChapterMap";
+import dynamic from "next/dynamic";
+
+// Force ChapterMap to only load on client
+const ChapterMap = dynamic(() => import("@/components/ChapterMap"), { 
+  ssr: false,
+  loading: () => <div className="mb-12 aspect-[16/10] bg-slate-100 rounded-3xl animate-pulse" />
+});
 
 export default async function ChapterPage({ params }) {
   const { slug } = await params;
