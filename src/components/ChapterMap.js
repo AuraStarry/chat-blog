@@ -35,11 +35,17 @@ export default function ChapterMap({ locations }) {
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     
-    // Debug logging (doesn't leak the key value)
-    console.log('[ChapterMap] Initializing with API Key present:', !!apiKey, 'Length:', apiKey?.length || 0);
+    // Enhanced Debug logging (Safe: only show first/last 4 chars)
+    const maskedKey = apiKey ? `${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}` : 'null';
+    console.log('[ChapterMap] API Key Check:', {
+      present: !!apiKey,
+      length: apiKey?.length || 0,
+      masked: maskedKey,
+      envName: 'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY'
+    });
 
-    if (!apiKey || apiKey === 'undefined') {
-      setError('Missing or invalid NEXT_PUBLIC_GOOGLE_MAPS_API_KEY. Please check your .env.local or Vercel settings.');
+    if (!apiKey || apiKey === 'undefined' || apiKey.length < 10) {
+      setError('Missing or invalid NEXT_PUBLIC_GOOGLE_MAPS_API_KEY. 請檢查 .env.local 或 Vercel 設定。');
       return;
     }
 
@@ -54,27 +60,26 @@ export default function ChapterMap({ locations }) {
           language: 'zh-TW',
         });
 
-        // Load libraries
+        // Load libraries separately to ensure they are captured correctly
         console.log('[ChapterMap] Loading libraries...');
-        const [mapsLib, geocodingLib] = await Promise.all([
-          importLibrary('maps'),
-          importLibrary('geocoding')
-        ]);
-        console.log('[ChapterMap] Libraries loaded:', !!mapsLib, !!geocodingLib);
+        const mapsLib = await importLibrary('maps');
+        const geocodingLib = await importLibrary('geocoding');
+        
+        console.log('[ChapterMap] Libraries loaded objects:', { mapsLib: !!mapsLib, geocodingLib: !!geocodingLib });
 
         if (!isMounted || !mapRef.current) return;
 
-        const maps = window.google.maps;
-        if (!maps || !maps.Map) {
-          throw new Error('Google Maps JS API 加載失敗或未完全初始化。');
-        }
+        // Use the classes directly from the returned library objects
+        const MapClass = mapsLib.Map;
+        const LatLngBoundsClass = mapsLib.LatLngBounds;
+        const GeocoderClass = geocodingLib.Geocoder;
+        // Marker and SymbolPath are usually in the maps library
+        const MarkerClass = mapsLib.Marker || window.google.maps.Marker;
+        const SymbolPathEnum = mapsLib.SymbolPath || window.google.maps.SymbolPath;
 
-        const MapClass = maps.Map;
-        const LatLngBoundsClass = maps.LatLngBounds;
-        const GeocoderClass = maps.Geocoder;
-        // Use maps.Marker which is available in 'maps' library
-        const MarkerClass = maps.Marker;
-        const SymbolPathEnum = maps.SymbolPath;
+        if (!MapClass || !GeocoderClass) {
+          throw new Error('無法從 Google Maps SDK 取得必要的類別 (Map/Geocoder)。');
+        }
 
         const mapInstance = new MapClass(mapRef.current, {
           center: { lat: 37.05, lng: 138.85 },
