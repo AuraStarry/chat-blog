@@ -59,9 +59,9 @@ export default async function ChapterPage({ params }) {
           </div>
         </header>
 
-        {locations.length > 0 && (
+        {/* {locations.length > 0 && (
           <ChapterMap locations={locations} />
-        )}
+        )} */}
 
         <main className="space-y-6">
           {renderedPosts.map((post, idx) => {
