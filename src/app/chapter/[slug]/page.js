@@ -8,11 +8,11 @@ const ChapterMap = dynamic(() => import("@/components/ChapterMap"), {
 });
 
 export default async function ChapterPage({ params }) {
-  const { slug } = await params;
+  const { slug: paramsSlug } = await params;
 
   let chapter;
   try {
-    chapter = await readChapterBySlug(slug);
+    chapter = await readChapterBySlug(paramsSlug);
   } catch (e) {
     notFound();
   }
@@ -21,10 +21,11 @@ export default async function ChapterPage({ params }) {
 
   // Pre-render all post content to a clean, serializable format
   const renderedPosts = await Promise.all(
-    posts.map(async (post) => {
+    posts.map(async (post, idx) => {
       const html = await renderMarkdown(post.content);
       return {
-        slug: post.frontmatter.slug || Math.random().toString(),
+        // Use a stable key!
+        id: post.frontmatter.slug || `post-${idx}`,
         title: post.frontmatter.title || "Untitled",
         summary: post.frontmatter.summary || "",
         cover_image: post.frontmatter.cover_image || "",
@@ -36,18 +37,17 @@ export default async function ChapterPage({ params }) {
     })
   );
 
-  // Collect locations for the map
   const locations = renderedPosts
     .filter(p => p.location_name && p.location_url)
     .map(p => ({
       name: p.location_name,
       url: p.location_url,
       title: p.title,
-      slug: p.slug
+      slug: p.id
     }));
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20">
       <div className="max-w-2xl mx-auto px-4 py-12 md:py-20">
         <header className="mb-12">
           <h1 className="text-4xl font-black mb-4 tracking-tight">{frontmatter.title}</h1>
@@ -64,7 +64,7 @@ export default async function ChapterPage({ params }) {
 
         <main className="space-y-6">
           {renderedPosts.map((post, idx) => (
-            <details key={post.slug} id={post.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 scroll-mt-8">
+            <details key={post.id} id={post.id} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 scroll-mt-8">
               <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                 <div className="flex items-start gap-4">
                   <span className="text-slate-300 font-mono text-lg mt-1">{(idx + 1).toString().padStart(2, '0')}</span>
