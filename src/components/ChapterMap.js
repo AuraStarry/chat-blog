@@ -9,7 +9,8 @@ export default function ChapterMap({ locations }) {
   const markersRef = useRef([]);
 
   useEffect(() => {
-    if (!mapRef.current) return;
+    // Only run on client
+    if (typeof window === 'undefined' || !mapRef.current) return;
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
     if (!apiKey) {
@@ -43,20 +44,19 @@ export default function ChapterMap({ locations }) {
         const geocoder = new google.maps.Geocoder();
         const bounds = new google.maps.LatLngBounds();
 
-        const results = await Promise.all(
-          locations.map(loc => {
-            return new Promise((resolve) => {
-              geocoder.geocode({ address: loc.name }, (res, status) => {
-                if (status === 'OK' && res && res[0]) {
-                  resolve({ ...loc, position: res[0].geometry.location });
-                } else {
-                  resolve(null);
-                }
-              });
+        const geocodePromises = locations.map(loc => {
+          return new Promise((resolve) => {
+            geocoder.geocode({ address: loc.name }, (res, status) => {
+              if (status === 'OK' && res && res[0]) {
+                resolve({ ...loc, position: res[0].geometry.location });
+              } else {
+                resolve(null);
+              }
             });
-          })
-        );
+          });
+        });
 
+        const results = await Promise.all(geocodePromises);
         if (!isMounted) return;
 
         const validResults = results.filter(Boolean);
@@ -114,7 +114,7 @@ export default function ChapterMap({ locations }) {
 
       {activeLoc && (
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center p-6 z-50">
-          <div className="pointer-events-auto w-full max-w-[240px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-5 animate-in fade-in zoom-in slide-in-from-bottom-4 duration-300">
+          <div className="pointer-events-auto w-full max-w-[240px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-5">
             <div className="flex justify-between items-start mb-3">
               <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">地點詳情</span>
               <button onClick={() => setActiveLoc(null)} className="text-slate-300 hover:text-slate-600">
@@ -136,7 +136,7 @@ export default function ChapterMap({ locations }) {
       {!activeLoc && !error && (
         <div className="absolute bottom-6 left-6 pointer-events-none">
           <div className="bg-white/90 backdrop-blur px-3 py-1.5 rounded-full border border-slate-200 text-[10px] font-bold text-slate-500 shadow-sm flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
             點擊插針查看詳情
           </div>
         </div>

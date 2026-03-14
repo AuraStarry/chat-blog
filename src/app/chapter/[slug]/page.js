@@ -1,5 +1,11 @@
 import { readChapterBySlug, renderMarkdown } from "@/lib/content/markdown";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const ChapterMap = dynamic(() => import("@/components/ChapterMap"), { 
+  ssr: false,
+  loading: () => <div className="mb-12 aspect-[16/10] bg-slate-100 rounded-3xl animate-pulse" />
+});
 
 export default async function ChapterPage({ params }) {
   const { slug } = await params;
@@ -30,6 +36,16 @@ export default async function ChapterPage({ params }) {
     })
   );
 
+  // Collect locations for the map
+  const locations = renderedPosts
+    .filter(p => p.location_name && p.location_url)
+    .map(p => ({
+      name: p.location_name,
+      url: p.location_url,
+      title: p.title,
+      slug: p.slug
+    }));
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       <div className="max-w-2xl mx-auto px-4 py-12 md:py-20">
@@ -41,6 +57,10 @@ export default async function ChapterPage({ params }) {
             <time>{frontmatter.date}</time>
           </div>
         </header>
+
+        {locations.length > 0 && (
+          <ChapterMap locations={locations} />
+        )}
 
         <main className="space-y-6">
           {renderedPosts.map((post, idx) => (
