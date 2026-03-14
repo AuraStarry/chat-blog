@@ -1,14 +1,16 @@
 ---
-title: '里山十帖的 JR 大澤站接駁與乘車證明'
+title: 里山十帖的 JR 大澤站接駁與乘車證明
+slug: osawa-station-shuttle-and-fare-proof
+status: published
+summary: 介紹里山十帖位於 JR 大澤站的貼心接駁服務，以及在無人車站大澤站如何領取乘車證明的實用教學。
+category: ''
+tags: []
+cover_image: /uploads/20260314-osawa-shuttle-1.jpg
+cover_image_alt: 里山十帖接駁車在大澤站外等候
 date: '2026-03-14'
-slug: 'osawa-station-shuttle-and-fare-proof'
-summary: '介紹里山十帖位於 JR 大澤站的貼心接駁服務，以及在無人車站大澤站如何領取乘車證明的實用教學。'
-status: 'draft'
-location_name: 'JR 大澤站 (Osawa Station)'
-location_address: '新潟県南魚沼市大沢'
+location_name: JR 大澤站 (Osawa Station)
+location_address: 新潟県南魚沼市大沢
 location_url: 'https://maps.app.goo.gl/3A7fC3sQnU7p7p7p7'
-cover_image: '/uploads/20260314-osawa-shuttle-1.jpg'
-cover_image_alt: '里山十帖接駁車在大澤站外等候'
 ---
 
 ## 車站外的溫暖等待
