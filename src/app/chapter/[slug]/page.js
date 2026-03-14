@@ -14,6 +14,14 @@ export default async function ChapterPage({ params }) {
 
   const { frontmatter, posts } = chapter;
 
+  // Pre-render all post content to avoid async rendering issues in the loop
+  const renderedPosts = await Promise.all(
+    posts.map(async (post) => ({
+      ...post,
+      htmlContent: await renderMarkdown(post.content)
+    }))
+  );
+
   // Collect locations for the map
   const locations = posts
     .filter(p => p.frontmatter.location_name && p.frontmatter.location_url)
@@ -42,10 +50,9 @@ export default async function ChapterPage({ params }) {
         )}
 
         <main className="space-y-6">
-          {posts.map(async (post, idx) => {
-            const htmlContent = await renderMarkdown(post.content);
+          {renderedPosts.map((post, idx) => {
             return (
-              <details key={idx} id={post.frontmatter.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 scroll-mt-8">
+              <details key={post.frontmatter.slug} id={post.frontmatter.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 scroll-mt-8">
                 <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                   <div className="flex items-start gap-4">
                     <span className="text-slate-300 font-mono text-lg mt-1">{(idx + 1).toString().padStart(2, '0')}</span>
@@ -79,7 +86,7 @@ export default async function ChapterPage({ params }) {
                       prose-headings:font-bold prose-h2:text-xl prose-h2:mt-6 prose-h2:mb-3
                       prose-p:leading-relaxed prose-p:mb-4
                       prose-img:rounded-lg"
-                    dangerouslySetInnerHTML={{ __html: htmlContent }} 
+                    dangerouslySetInnerHTML={{ __html: post.htmlContent }} 
                   />
 
                   {post.frontmatter.location_name && (
