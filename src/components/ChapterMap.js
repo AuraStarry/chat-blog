@@ -100,17 +100,6 @@ export default function ChapterMap({ locations }) {
           mapInstance.fitBounds(bounds, 50);
         }
       } catch (err) {
-
-            marker.addListener('click', () => {
-              setActiveLoc(loc);
-              mapInstance.panTo(loc.position);
-            });
-
-            markersRef.current.push(marker);
-          });
-          mapInstance.fitBounds(bounds, 50);
-        }
-      } catch (err) {
         console.error('Map init failed:', err);
         if (isMounted) setError(err.message);
       }
