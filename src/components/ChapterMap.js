@@ -8,6 +8,7 @@ export default function ChapterMap({ locations }) {
   const [error, setError] = useState(null);
   const [activeLoc, setActiveLoc] = useState(null);
   const markersRef = useRef([]);
+  const mapInstanceRef = useRef(null);
 
   useEffect(() => {
     setMounted(true);
@@ -17,12 +18,7 @@ export default function ChapterMap({ locations }) {
     if (!mounted || !mapRef.current) return;
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
-    
-    // Fallback if no API Key (prevents crash, but map won't work well)
-    if (!apiKey) {
-      console.warn('Google Maps API Key is missing.');
-      return;
-    }
+    if (!apiKey) return;
 
     const loader = new Loader({
       apiKey: apiKey,
@@ -30,13 +26,11 @@ export default function ChapterMap({ locations }) {
       libraries: ['places']
     });
 
-    let mapInstance = null;
-
     loader.load().then(async (google) => {
       try {
         if (!mapRef.current) return;
 
-        mapInstance = new google.maps.Map(mapRef.current, {
+        const mapInstance = new google.maps.Map(mapRef.current, {
           center: { lat: 37.05, lng: 138.85 },
           zoom: 11,
           disableDefaultUI: true,
@@ -46,6 +40,8 @@ export default function ChapterMap({ locations }) {
             { "featureType": "water", "elementType": "geometry", "stylers": [{ "color": "#e9e9e9" }] }
           ]
         });
+
+        mapInstanceRef.current = mapInstance;
 
         const geocoder = new google.maps.Geocoder();
         const bounds = new google.maps.LatLngBounds();
@@ -84,7 +80,7 @@ export default function ChapterMap({ locations }) {
               }
             });
 
-            marker.addListener('click', () => {
+            google.maps.event.addListener(marker, 'click', () => {
               setActiveLoc(loc);
               mapInstance.panTo(loc.position);
             });
@@ -102,8 +98,10 @@ export default function ChapterMap({ locations }) {
     });
 
     return () => {
-      markersRef.current.forEach(m => m.setMap(null));
-      markersRef.current = [];
+      if (markersRef.current) {
+        markersRef.current.forEach(m => m.setMap(null));
+        markersRef.current = [];
+      }
     };
   }, [mounted, locations]);
 
