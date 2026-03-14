@@ -47,6 +47,7 @@ export default function ChapterMap({ locations }) {
 
     const initMap = async () => {
       try {
+        console.log('[ChapterMap] initMap started...');
         setOptions({
           apiKey: apiKey,
           version: 'weekly',
@@ -54,18 +55,16 @@ export default function ChapterMap({ locations }) {
         });
 
         // Load libraries
-        // Note: Legacy Marker is actually in the 'maps' library, not 'marker'
+        console.log('[ChapterMap] Loading libraries...');
         const [mapsLib, geocodingLib] = await Promise.all([
           importLibrary('maps'),
           importLibrary('geocoding')
         ]);
+        console.log('[ChapterMap] Libraries loaded:', !!mapsLib, !!geocodingLib);
 
         if (!isMounted || !mapRef.current) return;
 
-        // Use the global window.google.maps to ensure we have the constructors
-        // after the libraries are loaded.
         const maps = window.google.maps;
-
         if (!maps || !maps.Map) {
           throw new Error('Google Maps JS API 加載失敗或未完全初始化。');
         }
@@ -73,6 +72,7 @@ export default function ChapterMap({ locations }) {
         const MapClass = maps.Map;
         const LatLngBoundsClass = maps.LatLngBounds;
         const GeocoderClass = maps.Geocoder;
+        // Use maps.Marker which is available in 'maps' library
         const MarkerClass = maps.Marker;
         const SymbolPathEnum = maps.SymbolPath;
 
@@ -94,14 +94,16 @@ export default function ChapterMap({ locations }) {
         const bounds = new LatLngBoundsClass();
 
         // Geocode addresses
+        console.log('[ChapterMap] Geocoding', locations.length, 'locations...');
         const results = await Promise.all(
           locations.map(loc => {
             return new Promise((resolve) => {
               geocoder.geocode({ address: loc.name }, (res, status) => {
                 if (status === 'OK' && res?.[0]) {
+                  console.log(`[ChapterMap] Geocoded ${loc.name} ->`, res[0].geometry.location.toString());
                   resolve({ ...loc, position: res[0].geometry.location });
                 } else {
-                  console.warn(`Geocoding failed for ${loc.name}: ${status}`);
+                  console.warn(`[ChapterMap] Geocoding failed for ${loc.name}: ${status}`);
                   resolve(null);
                 }
               });
@@ -112,6 +114,9 @@ export default function ChapterMap({ locations }) {
         if (!isMounted) return;
 
         const validResults = results.filter(Boolean);
+        console.log('[ChapterMap] Valid locations found:', validResults.length);
+        
+        // This state update triggers the UI change from "Initializing..."
         setMarkerCount(validResults.length);
 
         if (validResults.length > 0) {
@@ -139,9 +144,13 @@ export default function ChapterMap({ locations }) {
             markersRef.current.push(marker);
           });
           mapInstance.fitBounds(bounds, 50);
+          console.log('[ChapterMap] Map initialization complete with markers.');
+        } else {
+          // If no locations were geocoded, show an error instead of infinite loading
+          setError('無法取得任何地點的地理座標，請檢查 Geocoding API 是否啟用。');
         }
       } catch (err) {
-        console.error('Map init failed:', err);
+        console.error('[ChapterMap] Map init error:', err);
         if (isMounted) setError(err.message);
       }
     };
