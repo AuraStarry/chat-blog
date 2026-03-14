@@ -117,3 +117,4 @@
 - 2026-03-14：升級地圖至 Google Maps JS SDK。引入 `@googlemaps/js-api-loader` 並實作動態 Geocoding，確保插針能精確鎖定座標並隨地圖拖曳同步移動；恢復客製化插針與點擊資訊卡片設計。
 - 2026-03-14：修復 Chapter 頁面地圖消失問題。移除 `next/dynamic` 改用 `useEffect` 控管 Client-only 渲染；增加 `min-h-[300px]` 防止容器高度塌陷；加入 Debug 標籤與更詳細的初始化狀態提示。
 - 2026-03-14：修正 `@googlemaps/js-api-loader` v2 兼容性問題。升級至功能性 API (`setOptions`, `importLibrary`)，並優化 legacy Marker 與全域命名空間的存取邏輯。
+- 2026-03-14：解決 `ApiProjectMapError` 相關連鎖反應。改用 `window.google` 全域對象路徑存取建構子，防止因 API 授權失敗導致的解構賦值錯誤 (`i is not a constructor`)。

@@ -27,37 +27,38 @@ export default function ChapterMap({ locations }) {
 
     const initMap = async () => {
       try {
-        // Step 1: Initialize the core libraries
-        await Promise.all([
-          importLibrary('maps'),
-          importLibrary('geocoding')
-        ]);
+        // Use the functional setOptions and importLibrary as required by v2
+        setOptions({ apiKey, version: 'weekly' });
 
+        // First, ensure the core Maps JavaScript API is loaded
+        const mapsLib = await importLibrary('maps');
+        
         if (!isMounted || !mapRef.current) return;
 
-        // Step 2: Use the global google object which is now guaranteed to be populated
-        const g = window.google;
-        if (!g || !g.maps) {
-          throw new Error('Google Maps global object not found after loading');
-        }
+        // Use the returned classes from the library, which is the most robust way in v2
+        const MapClass = mapsLib.Map;
+        const LatLngBoundsClass = mapsLib.LatLngBounds;
 
-        const mapInstance = new g.maps.Map(mapRef.current, {
+        const mapInstance = new MapClass(mapRef.current, {
           center: { lat: 37.05, lng: 138.85 },
           zoom: 11,
           disableDefaultUI: true,
           zoomControl: true,
-          // Legacy styles
-          styles: [
-            {
-              featureType: "poi",
-              elementType: "labels",
-              stylers: [{ visibility: "off" }]
-            }
-          ]
+          styles: [{ featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] }]
         });
 
-        const geocoder = new g.maps.Geocoder();
-        const bounds = new g.maps.LatLngBounds();
+        // Load Geocoding and Marker libraries
+        const [geocodingLib, markerLib] = await Promise.all([
+          importLibrary('geocoding'),
+          importLibrary('marker')
+        ]);
+
+        const GeocoderClass = geocodingLib.Geocoder;
+        const MarkerClass = markerLib.Marker; // Legacy Marker is in 'marker' lib
+        const SymbolPathEnum = markerLib.SymbolPath;
+
+        const geocoder = new GeocoderClass();
+        const bounds = new LatLngBoundsClass();
 
         // Geocode addresses
         const results = await Promise.all(
@@ -84,12 +85,11 @@ export default function ChapterMap({ locations }) {
           validResults.forEach((loc) => {
             bounds.extend(loc.position);
             
-            // Use legacy Marker for now as it doesn't require a Map ID
-            const marker = new g.maps.Marker({
+            const marker = new MarkerClass({
               position: loc.position,
               map: mapInstance,
               icon: {
-                path: g.maps.SymbolPath.CIRCLE,
+                path: SymbolPathEnum.CIRCLE,
                 fillColor: '#0f172a',
                 fillOpacity: 1,
                 strokeWeight: 2,
