@@ -27,7 +27,7 @@ export default function ChapterMap({ locations }) {
 
     const initMap = async () => {
       try {
-        const [{ Map, LatLngBounds }, { Geocoder }, { Marker }] = await Promise.all([
+        const [{ Map, LatLngBounds }, { Geocoder }, { Marker, SymbolPath }] = await Promise.all([
           importLibrary('maps'),
           importLibrary('geocoding'),
           importLibrary('marker')
@@ -77,13 +77,11 @@ export default function ChapterMap({ locations }) {
           validResults.forEach((loc) => {
             bounds.extend(loc.position);
             
-            // Marker legacy support: google.maps.Marker is still available under the 'marker' library
-            // but needs to be accessed correctly or use window.google.maps.Marker
-            const marker = new google.maps.Marker({
+            const marker = new Marker({
               position: loc.position,
               map: mapInstance,
               icon: {
-                path: google.maps.SymbolPath.CIRCLE,
+                path: SymbolPath.CIRCLE,
                 fillColor: '#0f172a',
                 fillOpacity: 1,
                 strokeWeight: 2,
@@ -91,6 +89,17 @@ export default function ChapterMap({ locations }) {
                 scale: 8,
               }
             });
+
+            marker.addListener('click', () => {
+              setActiveLoc(loc);
+              mapInstance.panTo(loc.position);
+            });
+
+            markersRef.current.push(marker);
+          });
+          mapInstance.fitBounds(bounds, 50);
+        }
+      } catch (err) {
 
             marker.addListener('click', () => {
               setActiveLoc(loc);
