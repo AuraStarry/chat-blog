@@ -26,7 +26,7 @@ export default async function ChapterPage({ params }) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       <div className="max-w-2xl mx-auto px-4 py-12 md:py-20">
-        <header className="mb-12">
+        <header className="mb-8">
           <h1 className="text-4xl font-black mb-4 tracking-tight text-slate-900">{frontmatter.title}</h1>
           <div className="flex items-center text-sm text-slate-500 gap-2 mb-6">
             <span className="bg-white px-3 py-1 rounded-full border border-slate-200">{posts.length} 篇文章</span>
@@ -35,20 +35,37 @@ export default async function ChapterPage({ params }) {
           </div>
         </header>
 
-        {/* Map Placeholder Area */}
+        {/* Map Area */}
         {locations.length > 0 && (
-          <section className="mb-12 bg-white rounded-3xl overflow-hidden aspect-[16/10] relative border border-slate-200 shadow-sm">
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-              <div className="text-4xl mb-4">📍</div>
-              <h2 className="text-lg font-bold text-slate-800 mb-2">地圖預覽</h2>
-              <p className="text-sm text-slate-500 max-w-xs">
-                此冊包含 {locations.length} 個地點。未來將在此顯示 Google Maps 交互地圖。
-              </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <section className="mb-12 space-y-4">
+            <div className="bg-white rounded-3xl overflow-hidden aspect-[16/10] relative border border-slate-200 shadow-sm">
+              {/* Google Maps Embed as Backdrop (Optional, but using it as a dynamic feel) */}
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ border: 0, opacity: 0.6 }}
+                loading="lazy"
+                allowFullScreen
+                src={`https://www.google.com/maps/embed/v1/search?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}&q=${encodeURIComponent(locations.map(l => l.name).join('|'))}`}
+              ></iframe>
+              
+              {/* Custom Marker Overlays - Note: In a real Next.js app, this would be a Mapbox/Google JS SDK component. 
+                  Since we are focused on the concept, I'll simulate the "Pins" UI. */}
+              <div className="absolute inset-0 pointer-events-none p-8 flex flex-wrap items-center justify-center gap-6">
                 {locations.map((loc, idx) => (
-                  <span key={idx} className="bg-slate-50 px-3 py-1 rounded-full text-xs font-medium border border-slate-100">
-                    {loc.name}
-                  </span>
+                  <div key={idx} className="pointer-events-auto group relative">
+                    <a 
+                      href={`#${loc.slug}`}
+                      className="bg-white px-4 py-2 rounded-full shadow-lg border border-slate-200 flex items-center gap-2 transition-transform hover:scale-110 active:scale-95"
+                    >
+                      <span className="text-lg">📍</span>
+                      <span className="text-xs font-bold whitespace-nowrap">{loc.name}</span>
+                    </a>
+                    {/* Tooltip on hover showing post title */}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-900 text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-10">
+                      {loc.title}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -59,7 +76,7 @@ export default async function ChapterPage({ params }) {
           {posts.map(async (post, idx) => {
             const htmlContent = await renderMarkdown(post.content);
             return (
-              <details key={idx} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300">
+              <details key={idx} id={post.frontmatter.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 scroll-mt-8">
                 <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                   <div className="flex items-start gap-4">
                     <span className="text-slate-300 font-mono text-lg mt-1">{(idx + 1).toString().padStart(2, '0')}</span>
