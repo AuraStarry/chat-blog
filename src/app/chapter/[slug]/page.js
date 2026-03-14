@@ -1,5 +1,6 @@
 import { readChapterBySlug, renderMarkdown } from "@/lib/content/markdown";
 import { notFound } from "next/navigation";
+import ChapterMap from "@/components/ChapterMap";
 
 export default async function ChapterPage({ params }) {
   const { slug } = await params;
@@ -37,39 +38,7 @@ export default async function ChapterPage({ params }) {
 
         {/* Map Area */}
         {locations.length > 0 && (
-          <section className="mb-12 space-y-4">
-            <div className="bg-white rounded-3xl overflow-hidden aspect-[16/10] relative border border-slate-200 shadow-sm">
-              {/* Google Maps Embed as Backdrop (Optional, but using it as a dynamic feel) */}
-              <iframe
-                width="100%"
-                height="100%"
-                style={{ border: 0, opacity: 0.6 }}
-                loading="lazy"
-                allowFullScreen
-                src={`https://www.google.com/maps/embed/v1/search?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}&q=${encodeURIComponent(locations.map(l => l.name).join('|'))}`}
-              ></iframe>
-              
-              {/* Custom Marker Overlays - Note: In a real Next.js app, this would be a Mapbox/Google JS SDK component. 
-                  Since we are focused on the concept, I'll simulate the "Pins" UI. */}
-              <div className="absolute inset-0 pointer-events-none p-8 flex flex-wrap items-center justify-center gap-6">
-                {locations.map((loc, idx) => (
-                  <div key={idx} className="pointer-events-auto group relative">
-                    <a 
-                      href={`#${loc.slug}`}
-                      className="bg-white px-4 py-2 rounded-full shadow-lg border border-slate-200 flex items-center gap-2 transition-transform hover:scale-110 active:scale-95"
-                    >
-                      <span className="text-lg">📍</span>
-                      <span className="text-xs font-bold whitespace-nowrap">{loc.name}</span>
-                    </a>
-                    {/* Tooltip on hover showing post title */}
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-900 text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-10">
-                      {loc.title}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
+          <ChapterMap locations={locations} />
         )}
 
         <main className="space-y-6">
