@@ -73,12 +73,22 @@ export default function ChapterMap({ locations }) {
         const MapClass = mapsLib.Map;
         const LatLngBoundsClass = mapsLib.LatLngBounds;
         const GeocoderClass = geocodingLib.Geocoder;
+        
         // Marker and SymbolPath are usually in the maps library
-        const MarkerClass = mapsLib.Marker || window.google.maps.Marker;
-        const SymbolPathEnum = mapsLib.SymbolPath || window.google.maps.SymbolPath;
+        // Important: In newer JS SDK, Marker is often accessed via mapsLib.Marker
+        // but we need to check if it's actually there.
+        const MarkerClass = mapsLib.Marker;
+        const SymbolPathEnum = mapsLib.SymbolPath;
 
-        if (!MapClass || !GeocoderClass) {
-          throw new Error('無法從 Google Maps SDK 取得必要的類別 (Map/Geocoder)。');
+        console.log('[ChapterMap] Constructor check:', {
+          Map: typeof MapClass,
+          Bounds: typeof LatLngBoundsClass,
+          Geocoder: typeof GeocoderClass,
+          Marker: typeof MarkerClass
+        });
+
+        if (!MapClass || !GeocoderClass || !MarkerClass) {
+          throw new Error(`缺少必要的建構子 (Map:${!!MapClass}, Geocoder:${!!GeocoderClass}, Marker:${!!MarkerClass})`);
         }
 
         const mapInstance = new MapClass(mapRef.current, {
