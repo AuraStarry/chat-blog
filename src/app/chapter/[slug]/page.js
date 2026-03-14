@@ -43,26 +43,24 @@ export default async function ChapterPage({ params }) {
 
         <main className="space-y-6">
           {renderedPosts.map((post, idx) => (
-            <details key={post.slug} id={post.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 scroll-mt-8">
-              <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                <div className="flex items-start gap-4">
-                  <span className="text-slate-300 font-mono text-lg mt-1">{(idx + 1).toString().padStart(2, '0')}</span>
-                  <div>
-                    <h3 className="text-xl font-bold group-open:text-slate-900 transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="text-sm text-slate-500 mt-1 line-clamp-1 group-open:hidden">
-                      {post.summary}
-                    </p>
-                  </div>
+            <div key={post.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 p-6">
+              <div className="flex items-start gap-4">
+                <span className="text-slate-300 font-mono text-lg mt-1">{(idx + 1).toString().padStart(2, '0')}</span>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">
+                    {post.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 mt-1">
+                    {post.summary}
+                  </p>
                 </div>
-              </summary>
-              <div className="px-6 pb-8 pt-2 border-t border-slate-50">
+              </div>
+              <div className="mt-6 pt-6 border-t border-slate-50">
                 <div className="prose prose-slate max-w-none">
                   {post.htmlContent.substring(0, 100)}...
                 </div>
               </div>
-            </details>
+            </div>
           ))}
         </main>
       </div>
