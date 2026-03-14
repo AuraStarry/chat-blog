@@ -42,26 +42,7 @@ export default async function ChapterPage({ params }) {
         </header>
 
         <main className="space-y-6">
-          {renderedPosts.map((post, idx) => (
-            <div key={post.slug} className="group border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm transition-all hover:border-slate-300 p-6">
-              <div className="flex items-start gap-4">
-                <span className="text-slate-300 font-mono text-lg mt-1">{(idx + 1).toString().padStart(2, '0')}</span>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900">
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-slate-500 mt-1">
-                    {post.summary}
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 pt-6 border-t border-slate-50">
-                <div className="prose prose-slate max-w-none">
-                  {post.htmlContent.substring(0, 100)}...
-                </div>
-              </div>
-            </div>
-          ))}
+          <p>Debug: renderedPosts.length = {renderedPosts.length}</p>
         </main>
       </div>
     </div>
