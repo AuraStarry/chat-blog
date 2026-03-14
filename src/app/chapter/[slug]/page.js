@@ -1,11 +1,6 @@
 import { readChapterBySlug, renderMarkdown } from "@/lib/content/markdown";
 import { notFound } from "next/navigation";
-import dynamic from "next/dynamic";
-
-const ChapterMap = dynamic(() => import("@/components/ChapterMap"), { 
-  ssr: false,
-  loading: () => <div className="mb-12 aspect-[16/10] bg-slate-100 rounded-3xl animate-pulse" />
-});
+import ChapterMapClient from "@/components/ChapterMapClient";
 
 export default async function ChapterPage({ params }) {
   const { slug: paramsSlug } = await params;
@@ -48,7 +43,6 @@ export default async function ChapterPage({ params }) {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20">
-      <div className="bg-yellow-400 p-2 text-black text-center font-bold">DEPLOYMENT CHECK: V4</div>
       <div className="max-w-2xl mx-auto px-4 py-12 md:py-20">
         <header className="mb-12">
           <h1 className="text-4xl font-black mb-4 tracking-tight">{frontmatter.title}</h1>
@@ -57,11 +51,11 @@ export default async function ChapterPage({ params }) {
             <span>•</span>
             <time>{frontmatter.date}</time>
           </div>
+          <div className="hidden" id="debug-locations-count">{locations.length}</div>
         </header>
 
-        <div className="text-xs text-slate-300 mb-2">DEBUG: Locations found: {locations.length}</div>
         {locations.length > 0 && (
-          <ChapterMap locations={locations} />
+          <ChapterMapClient locations={locations} />
         )}
 
         <main className="space-y-6">
