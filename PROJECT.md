@@ -96,7 +96,7 @@
 2. **補上發布狀態流轉 (Workflow)**： ← DOING
    - [ ] 在 Studio 增加「提交審閱 (Review)」與「正式發布 (Publish)」的按鈕與邏輯。 [!]
    - [x] 優化 Studio 儲存後的 UX：移除重導，改為原地顯示成功提示並提醒部署延遲。
-   - [ ] 實作前台文章列表（僅顯示 `published` 狀態的文章）。
+   - [x] 實作前台文章列表（僅顯示 `published` 狀態的文章，並對 `draft` 列表進行簡易密碼保護）。
 3. **媒體管理器 (Media Picker)**：
    - [ ] 實作一個簡單的 UI 讓 Studio 能列出並選擇 `public/uploads` 內的圖片。
 
@@ -112,3 +112,4 @@
 - 2026-03-13：新增文章 `ishiuchi-station-quiet-moments`。實作對話素材轉化流程：自動搬移圖片至 `public/uploads/`、檢索 Google Maps 地標資訊、並依據 `EDITING_SKILL.md` 起草 Draft。
 - 2026-03-14：新增文章 `osawa-station-shuttle-and-fare-proof`。記錄里山十帖的大澤站接駁與無人車站乘車證明領取流程。更新 PROJECT.md 並完成 Git 同步。
 - 2026-03-14：優化編輯規範。更新 `EDITING_SKILL.md` 要求若首圖與 Cover 相同則內文不重複放置；已同步重構 `ishiuchi-station-quiet-moments` 與 `osawa-station-shuttle-and-fare-proof` 以維持排版簡潔。
+- 2026-03-14：實作首頁私有草稿列表過濾。現在首頁會檢查 `localStorage` 中的 `studio_password` 是否為三個中文漢字，否則隱藏 Drafts 列表。
