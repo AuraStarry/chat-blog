@@ -58,6 +58,7 @@ export default async function ChapterPage({ params }) {
           </div>
         </header>
 
+        <div className="text-xs text-slate-300 mb-2">DEBUG: Locations found: {locations.length}</div>
         {locations.length > 0 && (
           <ChapterMap locations={locations} />
         )}
