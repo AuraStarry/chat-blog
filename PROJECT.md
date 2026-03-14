@@ -110,3 +110,4 @@
 - 2026-03-13：修復 `/studio` 路由 404 問題（重新命名目錄並移除 Route Group 衝突）；實作 Studio 頁面的草稿讀取功能，支援透過 `?saved=slug` 載入現有內容進行編輯。
 - 2026-03-13：優化 Post 頁面排版：移除作者欄、精簡標題區塊、修正 Summary 重複顯示問題、增加 Google Maps Embed 預留區塊。同時更新 `EDITING_SKILL.md`，將地點統一規範為「地標 (Place / POI)」，要求 Agent 必須搜尋精確的正式名稱與 Google Maps 分享連結。
 - 2026-03-13：新增文章 `ishiuchi-station-quiet-moments`。實作對話素材轉化流程：自動搬移圖片至 `public/uploads/`、檢索 Google Maps 地標資訊、並依據 `EDITING_SKILL.md` 起草 Draft。
+- 2026-03-14：新增文章 `osawa-station-shuttle-and-fare-proof`。記錄里山十帖的大澤站接駁與無人車站乘車證明領取流程。更新 PROJECT.md 並完成 Git 同步。

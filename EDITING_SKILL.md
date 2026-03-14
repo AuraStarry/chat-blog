@@ -37,7 +37,7 @@
 - **檔案命名**：建議使用日期或 Slug 作為前綴，例如 `20260313-my-post-01.jpg`。
 - **引用路徑**：在 Markdown 或 Frontmatter 中，使用相對於 public 的路徑，例如 `/uploads/filename.jpg`。
 - **Cover Image**：若對話中有提到圖片，Agent 需在 frontmatter 預留 `cover_image` 位置，並在 `cover_image_alt` 寫下描述。
-- **內文圖片**：使用標準 Markdown 語法 `![alt](url)`，並附帶簡單的圖說（caption）。
+- **內文圖片**：使用標準 Markdown 語法 `![alt](url)`，並附帶簡單的圖說（caption）。**注意：若首張內文圖片與 `cover_image` 相同，則內文中不應重複放置該圖片，以避免頁面頂部重複顯示。**
 
 ## 4. 地點與地標 (Places / POI) 資訊處理
 - **精確檢索**：若內容提及特定店家、名勝古蹟、或任何地圖上的「地標 (Place)」，Agent 必須使用 `web_search` 查找該地點的：
