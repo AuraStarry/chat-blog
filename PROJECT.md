@@ -111,3 +111,4 @@
 - 2026-03-14：優化編輯規範。更新 `EDITING_SKILL.md` 要求若首圖與 Cover 相同則內文不重複放置；已同步重構 `ishiuchi-station-quiet-moments` 與 `osawa-station-shuttle-and-fare-proof` 以維持排版簡潔。
 - 2026-03-14：實作首頁私有草稿列表過濾。現在首頁會檢查 `localStorage` 中的 `studio_password` 是否為三個中文漢字，否則隱藏 Drafts 列表。
 - 2026-03-14：Studio UI 優化與規範更新。修正 Dark Mode 下「預覽文章」按鈕字體不可見問題；確認放棄「發布流轉按鈕」與「媒體管理器 UI」需求，改採「Slug 資料夾化」圖片儲存規範。更新 PROJECT.md 與下一步。
+- 2026-03-14：實作首個 Chapter「魚沼米飯之旅」。建立 `content/chapters/` 目錄與資料讀取邏輯；開發前台 Chapter 頁面之自定義地圖插針功能，支持點擊插針跳轉至對應文章，並在懸浮時顯示文章標題。
