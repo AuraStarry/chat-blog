@@ -55,7 +55,12 @@ export default async function ChapterPage({ params }) {
         </header>
 
         {locations.length > 0 && (
-          <ChapterMapClient locations={locations} />
+          <div className="relative">
+            <div className="absolute -top-6 left-0 text-[10px] font-mono text-slate-300">
+              [Debug] Map Active: {locations.length} locations
+            </div>
+            <ChapterMapClient locations={locations} />
+          </div>
         )}
 
         <main className="space-y-6">

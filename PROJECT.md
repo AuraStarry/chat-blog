@@ -115,3 +115,5 @@
 - 2026-03-14：重構 ChapterMap 為 Client Component。修正手機版懸浮標題重疊與互動問題，改為「點擊插針後顯示資訊卡片」；資訊卡片包含文章標題、段落跳轉按鈕與 Google Maps 外部連結。
 - 2026-03-14：優化地圖互動性。修正插針圖層阻擋底層地圖操作的問題，現在背景地圖已可自由拖曳與縮放；同步精簡插針預設樣式並強化資訊卡片細節。
 - 2026-03-14：升級地圖至 Google Maps JS SDK。引入 `@googlemaps/js-api-loader` 並實作動態 Geocoding，確保插針能精確鎖定座標並隨地圖拖曳同步移動；恢復客製化插針與點擊資訊卡片設計。
+- 2026-03-14：修復 Chapter 頁面地圖消失問題。移除 `next/dynamic` 改用 `useEffect` 控管 Client-only 渲染；增加 `min-h-[300px]` 防止容器高度塌陷；加入 Debug 標籤與更詳細的初始化狀態提示。
+- 2026-03-14：修正 `@googlemaps/js-api-loader` v2 兼容性問題。升級至功能性 API (`setOptions`, `importLibrary`)，並優化 legacy Marker 與全域命名空間的存取邏輯。

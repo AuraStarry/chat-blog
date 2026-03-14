@@ -1,52 +1,56 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { Loader } from '@googlemaps/js-api-loader';
+import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 
 export default function ChapterMap({ locations }) {
   const mapRef = useRef(null);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [activeLoc, setActiveLoc] = useState(null);
+  const [markerCount, setMarkerCount] = useState(0);
   const markersRef = useRef([]);
 
   useEffect(() => {
-    // 1. Initial mounted check
-    setIsLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    // 2. Only run after mounted and mapRef is ready
-    if (!isLoaded || !mapRef.current) return;
+    if (!mapRef.current) return;
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     if (!apiKey) {
-      setError('Missing API Key');
+      setError('Missing API Key (NEXT_PUBLIC_GOOGLE_MAPS_API_KEY)');
       return;
     }
 
-    const loader = new Loader({
+    setOptions({
       apiKey: apiKey,
-      version: 'weekly',
-      libraries: ['places']
+      version: 'weekly'
     });
 
-    let mapInstance = null;
     let isMounted = true;
 
     const initMap = async () => {
       try {
-        const google = await loader.load();
+        const [{ Map, LatLngBounds }, { Geocoder }, { Marker }] = await Promise.all([
+          importLibrary('maps'),
+          importLibrary('geocoding'),
+          importLibrary('marker')
+        ]);
+
         if (!isMounted || !mapRef.current) return;
 
-        mapInstance = new google.maps.Map(mapRef.current, {
+        const mapInstance = new Map(mapRef.current, {
           center: { lat: 37.05, lng: 138.85 },
           zoom: 11,
           disableDefaultUI: true,
           zoomControl: true,
+          styles: [
+            {
+              featureType: "poi",
+              elementType: "labels",
+              stylers: [{ visibility: "off" }]
+            }
+          ]
         });
 
-        const geocoder = new google.maps.Geocoder();
-        const bounds = new google.maps.LatLngBounds();
+        const geocoder = new Geocoder();
+        const bounds = new LatLngBounds();
 
         // Geocode addresses
         const results = await Promise.all(
@@ -56,6 +60,7 @@ export default function ChapterMap({ locations }) {
                 if (status === 'OK' && res?.[0]) {
                   resolve({ ...loc, position: res[0].geometry.location });
                 } else {
+                  console.warn(`Geocoding failed for ${loc.name}: ${status}`);
                   resolve(null);
                 }
               });
@@ -66,9 +71,14 @@ export default function ChapterMap({ locations }) {
         if (!isMounted) return;
 
         const validResults = results.filter(Boolean);
+        setMarkerCount(validResults.length);
+
         if (validResults.length > 0) {
           validResults.forEach((loc) => {
             bounds.extend(loc.position);
+            
+            // Marker legacy support: google.maps.Marker is still available under the 'marker' library
+            // but needs to be accessed correctly or use window.google.maps.Marker
             const marker = new google.maps.Marker({
               position: loc.position,
               map: mapInstance,
@@ -104,20 +114,24 @@ export default function ChapterMap({ locations }) {
       markersRef.current.forEach(m => m.setMap(null));
       markersRef.current = [];
     };
-  }, [isLoaded, locations]);
-
-  // SSR Placeholder
-  if (!isLoaded) {
-    return <div className="mb-12 aspect-[16/10] bg-slate-100 rounded-3xl animate-pulse" />;
-  }
+  }, [locations]);
 
   return (
-    <div className="mb-12 bg-slate-100 rounded-3xl overflow-hidden aspect-[16/10] relative border border-slate-200 shadow-sm">
+    <div className="mb-12 bg-slate-100 rounded-3xl overflow-hidden aspect-[16/10] min-h-[300px] relative border border-slate-200 shadow-sm">
       <div ref={mapRef} className="w-full h-full" />
       
       {error && (
-        <div className="absolute inset-0 bg-slate-50 flex flex-col items-center justify-center p-6 text-center z-10">
-          <p className="text-[10px] text-slate-400">Map Error: {error}</p>
+        <div className="absolute inset-0 bg-slate-50 flex flex-col items-center justify-center p-6 text-center z-20">
+          <p className="text-xs font-bold text-slate-500 mb-2">地圖載入失敗</p>
+          <p className="text-[10px] text-slate-400 font-mono max-w-xs break-all">{error}</p>
+        </div>
+      )}
+
+      {!error && markerCount === 0 && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+          <div className="text-slate-400 text-[10px] animate-pulse">
+            正在初始化地圖與座標 ({locations.length} 個地點)...
+          </div>
         </div>
       )}
 
@@ -126,7 +140,7 @@ export default function ChapterMap({ locations }) {
           <div className="pointer-events-auto w-full max-w-[240px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-5">
             <div className="flex justify-between items-start mb-3">
               <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">地點詳情</span>
-              <button onClick={() => setActiveLoc(null)} className="text-slate-300 hover:text-slate-600">✕</button>
+              <button onClick={() => setActiveLoc(null)} className="text-slate-300 hover:text-slate-600 p-1">✕</button>
             </div>
             <div className="mb-5">
               <div className="text-[10px] text-indigo-500 font-bold mb-1">{activeLoc.name}</div>
