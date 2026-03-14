@@ -4,12 +4,15 @@ slug: osawa-station-shuttle-and-fare-proof
 status: published
 summary: 介紹里山十帖位於 JR 大澤站的貼心接駁服務，以及在無人車站大澤站如何領取乘車證明的實用教學。
 category: ''
-tags: []
+tags:
+  - 里山十帖
+  - 接駁
+  - JR大澤站
 cover_image: /uploads/20260314-osawa-shuttle-1.jpg
 cover_image_alt: 里山十帖接駁車在大澤站外等候
 date: '2026-03-14'
-location_name: 'JR 大澤站 (Osawa Station)'
-location_address: '新潟県南魚沼市大沢'
+location_name: JR 大澤站 (Osawa Station)
+location_address: 新潟県南魚沼市大沢
 location_url: 'https://maps.app.goo.gl/3A7fC3sQnU7p7p7p7'
 ---
 
@@ -31,6 +34,6 @@ location_url: 'https://maps.app.goo.gl/3A7fC3sQnU7p7p7p7'
 2. **付費方式**：帶著這張證明書上車，等到抵達目的地車站後，再前往櫃檯補票或支付乘車費用。
 
 ![大澤站內的乘車證明領取機](/uploads/20260314-osawa-shuttle-2.jpg)
-*回程時因為車站沒有曾經人員與售票亭，需使用站中的乘車證明領取機領取上車證明。*
+*回程時因為車站沒有任何人員與售票亭，需使用站中的乘車證明領取機領取上車證明。*
 
 這種保留了傳統感的操作，也是在雪國鐵道旅行中的一種獨特體驗。
