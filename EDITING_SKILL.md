@@ -33,9 +33,9 @@
 3. **本地驗證**：完成寫入後，嘗試讀取該 `slug` 的 API 或執行 `node scripts/validate-content.js`（若存在）進行驗證。
 
 ## 3. 圖片處理
-- **儲存位置**：所有傳入的圖片檔案必須存放在 `chat-blog/public/uploads/` 目錄下。
-- **檔案命名**：建議使用日期或 Slug 作為前綴，例如 `20260313-my-post-01.jpg`。
-- **引用路徑**：在 Markdown 或 Frontmatter 中，使用相對於 public 的路徑，例如 `/uploads/filename.jpg`。
+- **儲存位置**：所有與文章相關的圖片必須存放在 `chat-blog/public/uploads/{slug}/` 目錄下（若 slug 未定，則暫存於 `uploads/` 並在確定標題後移動）。
+- **檔案命名**：建議使用序號或描述，例如 `01.jpg`, `ticket-box.jpg`。
+- **引用路徑**：在 Markdown 或 Frontmatter 中，使用相對於 public 的完整路徑，例如 `/uploads/my-post-slug/01.jpg`。
 - **Cover Image**：若對話中有提到圖片，Agent 需在 frontmatter 預留 `cover_image` 位置，並在 `cover_image_alt` 寫下描述。
 - **內文圖片**：使用標準 Markdown 語法 `![alt](url)`，並附帶簡單的圖說（caption）。**注意：若首張內文圖片與 `cover_image` 相同，則內文中不應重複放置該圖片，以避免頁面頂部重複顯示。**
 

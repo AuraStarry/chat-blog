@@ -152,6 +152,18 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
           <button className={styles.button} type="submit" disabled={isSaving}>
             {isSaving ? "正在儲存..." : "儲存變更"}
           </button>
+          
+          {initialData.slug && (
+            <a 
+              href={`/post/${initialData.slug}`} 
+              target="_blank" 
+              className={styles.button} 
+              style={{ background: "#27272a", color: "#fafafa", border: "1px solid #3f3f46" }}
+            >
+              預覽文章 ↗
+            </a>
+          )}
+
           <Link href="/" className={styles.button} style={{ background: "transparent", color: "#a1a1aa", border: "1px solid #27272a" }}>
             返回首頁
           </Link>

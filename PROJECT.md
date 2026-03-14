@@ -83,22 +83,18 @@
 ---
 
 ## 目前階段
-- **Phase**：功能性骨架開發（Functional Backbone Development）
-- **狀態**：✅ 基礎環境、內容讀寫、AI 機器介面、地點與冊 (Chapter) 資料架構已完成；🚀 正在串接 Git-as-a-CMS 儲存流程。
+- **Phase**：功能性骨架開發 (Functional Backbone Development)
+- **狀態**：✅ 基礎環境、內容讀寫、Markdown 渲染、AI 機器介面、地點與冊 (Chapter) 資料架構已完成；🚀 正在優化 Studio 編輯體驗與內容管理規範。
 
 ---
 
 ## Next（下一步）
-1. **實作 Git-as-a-CMS 儲存流程**： ✅
-   - [x] 建立 `src/lib/publish/github.js` 封裝 GitHub API 操作。
-   - [x] 整合 Studio 的儲存 Action，支援 GitHub Commit 模式。
-   - [x] 增加開發環境 (Local FS) 與生產環境 (GitHub API) 的切換邏輯。
-2. **補上發布狀態流轉 (Workflow)**： ← DOING
-   - [ ] 在 Studio 增加「提交審閱 (Review)」與「正式發布 (Publish)」的按鈕與邏輯。 [!]
-   - [x] 優化 Studio 儲存後的 UX：移除重導，改為原地顯示成功提示並提醒部署延遲。
-   - [x] 實作前台文章列表（僅顯示 `published` 狀態的文章，並對 `draft` 列表進行簡易密碼保護）。
-3. **媒體管理器 (Media Picker)**：
-   - [ ] 實作一個簡單的 UI 讓 Studio 能列出並選擇 `public/uploads` 內的圖片。
+1. **地圖功能強化**：
+   - [ ] 串接正式 Google Maps API Key（目前為預留區塊）。
+   - [ ] 在 Chapter 頁面實現互動式地圖（Mapbox 或 Google Maps JS SDK）。
+2. **內容組織優化 (Folder-per-Post)**：
+   - [ ] 實作圖片儲存重構：未來新文章的圖片需存放在 `public/uploads/{slug}/` 資料夾下，而非散落在 `uploads/` 根目錄。
+   - [ ] 更新 `EDITING_SKILL.md` 規範 Agent 在起草時自動建立對應資料夾並移動檔案。
 
 ---
 
@@ -109,7 +105,9 @@
 - 2026-03-13：實作「AI/機器介面」規範：新增 `listAllPosts` utility 與 `/api/content`, `/api/content/[slug]` 路由，支援結構化資料打撈；更新 `PROJECT.md` 將機器介面納入核心規格。
 - 2026-03-13：修復 `/studio` 路由 404 問題（重新命名目錄並移除 Route Group 衝突）；實作 Studio 頁面的草稿讀取功能，支援透過 `?saved=slug` 載入現有內容進行編輯。
 - 2026-03-13：優化 Post 頁面排版：移除作者欄、精簡標題區塊、修正 Summary 重複顯示問題、增加 Google Maps Embed 預留區塊。同時更新 `EDITING_SKILL.md`，將地點統一規範為「地標 (Place / POI)」，要求 Agent 必須搜尋精確的正式名稱與 Google Maps 分享連結。
+- 2026-03-13：實作 Markdown 渲染引擎。整合 `remark-gfm`, `remark-breaks` 與 `rehype-stringify`；支援 GFM 與強制換行，並套用 Tailwind Typography (Prose) 樣式。
 - 2026-03-13：新增文章 `ishiuchi-station-quiet-moments`。實作對話素材轉化流程：自動搬移圖片至 `public/uploads/`、檢索 Google Maps 地標資訊、並依據 `EDITING_SKILL.md` 起草 Draft。
 - 2026-03-14：新增文章 `osawa-station-shuttle-and-fare-proof`。記錄里山十帖的大澤站接駁與無人車站乘車證明領取流程。更新 PROJECT.md 並完成 Git 同步。
 - 2026-03-14：優化編輯規範。更新 `EDITING_SKILL.md` 要求若首圖與 Cover 相同則內文不重複放置；已同步重構 `ishiuchi-station-quiet-moments` 與 `osawa-station-shuttle-and-fare-proof` 以維持排版簡潔。
 - 2026-03-14：實作首頁私有草稿列表過濾。現在首頁會檢查 `localStorage` 中的 `studio_password` 是否為三個中文漢字，否則隱藏 Drafts 列表。
+- 2026-03-14：Studio UI 優化與規範更新。修正 Dark Mode 下「預覽文章」按鈕字體不可見問題；確認放棄「發布流轉按鈕」與「媒體管理器 UI」需求，改採「Slug 資料夾化」圖片儲存規範。更新 PROJECT.md 與下一步。
