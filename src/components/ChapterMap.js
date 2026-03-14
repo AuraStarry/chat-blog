@@ -17,76 +17,85 @@ export default function ChapterMap({ locations }) {
     });
 
     loader.load().then(async (google) => {
-      const newMap = new google.maps.Map(mapRef.current, {
-        center: { lat: 37.05, lng: 138.85 }, // Default center (Uonuma area)
-        zoom: 11,
-        disableDefaultUI: true,
-        zoomControl: true,
-        styles: [
-          {
-            "featureType": "all",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#616161" }]
-          },
-          {
-            "featureType": "water",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#e9e9e9" }]
-          }
-        ]
-      });
+      if (!mapRef.current) return;
+      
+      try {
+        const newMap = new google.maps.Map(mapRef.current, {
+          center: { lat: 37.05, lng: 138.85 }, // Default center (Uonuma area)
+          zoom: 11,
+          disableDefaultUI: true,
+          zoomControl: true,
+          styles: [
+            {
+              "featureType": "all",
+              "elementType": "labels.text.fill",
+              "stylers": [{ "color": "#616161" }]
+            },
+            {
+              "featureType": "water",
+              "elementType": "geometry",
+              "stylers": [{ "color": "#e9e9e9" }]
+            }
+          ]
+        });
 
-      setMap(newMap);
+        setMap(newMap);
 
-      const geocoder = new google.maps.Geocoder();
-      const bounds = new google.maps.LatLngBounds();
+        const geocoder = new google.maps.Geocoder();
+        const bounds = new google.maps.LatLngBounds();
 
-      const results = await Promise.all(
-        locations.map(async (loc) => {
-          return new Promise((resolve) => {
-            geocoder.geocode({ address: loc.name }, (results, status) => {
-              if (status === 'OK' && results[0]) {
-                const position = results[0].geometry.location;
-                bounds.extend(position);
-                resolve({ ...loc, position });
-              } else {
-                resolve(null);
+        const results = await Promise.all(
+          locations.map(async (loc) => {
+            return new Promise((resolve) => {
+              geocoder.geocode({ address: loc.name }, (results, status) => {
+                if (status === 'OK' && results[0]) {
+                  const position = results[0].geometry.location;
+                  bounds.extend(position);
+                  resolve({ ...loc, position });
+                } else {
+                  console.error('Geocoding failed for:', loc.name, status);
+                  resolve(null);
+                }
+              });
+            });
+          })
+        );
+
+        const validResults = results.filter(Boolean);
+        setGeocodedLocations(validResults);
+
+        if (validResults.length > 0) {
+          newMap.fitBounds(bounds, 50);
+          
+          // Add markers
+          validResults.forEach((loc, idx) => {
+            const marker = new google.maps.Marker({
+              position: loc.position,
+              map: newMap,
+              title: loc.name,
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: '#0f172a',
+                fillOpacity: 1,
+                strokeWeight: 2,
+                strokeColor: '#ffffff',
+                scale: 8,
               }
             });
+
+            marker.addListener('click', () => {
+              setActiveLoc(loc);
+              newMap.panTo(loc.position);
+            });
+
+            markersRef.current.push(marker);
           });
-        })
-      );
-
-      const validResults = results.filter(Boolean);
-      setGeocodedLocations(validResults);
-
-      if (validResults.length > 0) {
-        newMap.fitBounds(bounds, 50);
-        
-        // Add markers
-        validResults.forEach((loc, idx) => {
-          const marker = new google.maps.Marker({
-            position: loc.position,
-            map: newMap,
-            title: loc.name,
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              fillColor: '#0f172a',
-              fillOpacity: 1,
-              strokeWeight: 2,
-              strokeColor: '#ffffff',
-              scale: 8,
-            }
-          });
-
-          marker.addListener('click', () => {
-            setActiveLoc(loc);
-            newMap.panTo(loc.position);
-          });
-
-          markersRef.current.push(marker);
-        });
+        }
+      } catch (err) {
+        console.error('Google Maps Load Error:', err);
       }
+    }).catch(err => {
+      console.error('Loader Error:', err);
     });
 
     return () => {
