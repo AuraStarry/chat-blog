@@ -99,6 +99,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-15：更新 `EDITING_SKILL.md` 連結回報規範。未來回覆 Gore 時需提供可直接點擊的正式站完整網址（`https://chat-blog-silk.vercel.app/`），不得僅提供相對路徑。
 - 2026-03-15：新增頁面 `hakkaisan-yukimuro-tour`（八海山雪室）。完成魚沼之里雪中貯蔵庫見學內容起草、三張現場照片整理至 `public/uploads/hakkaisan-yukimuro-tour/`、補齊 location frontmatter，並通過 `scripts/validate-content.js`。
 - 2026-03-15：新增編輯規範分層機制。`EDITING_SKILL.md` 明確定義「全域規範 + 個人 profile」架構，新增 `editing-profiles/gore.md` 與 `editing-profiles/hazel.md`；並加入規則：未來提出 editing 規範異動時，Agent 必須先確認是全域專案規範或個人規範後才可修改。
 - 2026-03-15：全案將「post」概念更名為「page」。新增 `/page/[slug]` 路由與 `/api/pages` 介面、Studio/首頁/Chapter 改用 page 命名；`/post/[slug]` 保留 redirect；內容檔案移至 `content/pages/`，並保持 `content/posts/` fallback 以兼容舊資料。完成 `validate-content` 驗證。
