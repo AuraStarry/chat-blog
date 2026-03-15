@@ -35,7 +35,7 @@
 ## 3. 圖片處理
 - **儲存位置**：所有與文章相關的圖片必須存放在 `chat-blog/public/uploads/{slug}/` 目錄下（若 slug 未定，則暫存於 `uploads/` 並在確定標題後移動）。
 - **檔案命名**：建議使用序號或描述，例如 `01.jpg`, `ticket-box.jpg`。
-- **引用路徑**：在 Markdown 或 Frontmatter 中，使用相對於 public 的完整路徑，例如 `/uploads/my-post-slug/01.jpg`。
+- **引用路徑**：在 Markdown 或 Frontmatter 中，使用相對於 public 的完整路徑，例如 `/uploads/my-page-slug/01.jpg`。
 - **Cover Image**：若對話中有提到圖片，Agent 需在 frontmatter 預留 `cover_image` 位置，並在 `cover_image_alt` 寫下描述。
 - **內文圖片**：使用標準 Markdown 語法 `![alt](url)`，並附帶簡單的圖說（caption）。**注意：若首張內文圖片與 `cover_image` 相同，則內文中不應重複放置該圖片，以避免頁面頂部重複顯示。**
 
@@ -52,7 +52,7 @@
 
 ## 5. 「冊 (Chapter)」模式編輯
 - **集結成冊**：當 Gore 要求「將這幾篇集結成冊」或「建立一個關於...的 Chapter」時，Agent 需建立一個 Chapter MD。
-- **順序維護**：Agent 需根據對話邏輯（如時間序或 Gore 指定的順序）排列 `posts` 列表。
+- **順序維護**：Agent 需根據對話邏輯（如時間序或 Gore 指定的順序）排列 `pages` 列表。
 - **資料彙整**：建立 Chapter 時，應確保關聯的文章已經存在。
 
 ## 6. 編輯風格 (Voice & Tone)
@@ -64,7 +64,7 @@
 1. **讀取素材**：獲取對話紀錄中的原始素材。
 2. **鎖定主題**：優先確認文章主題（Title），建立與 Gore 的共識索引。
 3. **結構配置**：依據此規範規劃標題與章節。
-4. **起草 Draft**：調用 `saveDraftFromForm` 寫入 `content/posts/`。
+4. **起草 Draft**：調用 `saveDraftFromForm` 寫入 `content/pages/`。
 5. **回報連結**：回傳 `/studio?saved={slug}` 供 Gore 進行 GUI 二次編輯。
 
 ---

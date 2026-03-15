@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./page.module.scss";
 
-export default function StudioForm({ initialData, saveAction, postStatusConstants }) {
+export default function StudioForm({ initialData, saveAction, pageStatusConstants }) {
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [error, setError] = useState("");
@@ -26,7 +26,6 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
     setSaveMessage("");
     setError("");
 
-    // Append password to formData
     formData.set("edit_password", password);
 
     try {
@@ -41,8 +40,7 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
         setError(result.message || result.error);
       } else {
         setSaveMessage("儲存成功！Git Commit 已送出，Vercel 正在部署中（約需 1-2 分鐘生效）。");
-        // Scroll to top to see message
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     } catch (e) {
       setError("儲存失敗：" + e.message);
@@ -51,7 +49,6 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
     }
   }
 
-  // If no password, don't show the form (it will prompt in useEffect)
   if (typeof window !== "undefined" && !password && !localStorage.getItem("studio_password")) {
     return (
       <div className={styles.card} style={{ textAlign: "center", padding: "40px" }}>
@@ -84,13 +81,13 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
 
           <div>
             <label className={styles.label} htmlFor="slug">Slug（唯讀）</label>
-            <input className={styles.input} id="slug" name="slug" placeholder="my-first-post" defaultValue={initialData.slug} readOnly />
+            <input className={styles.input} id="slug" name="slug" placeholder="my-first-page" defaultValue={initialData.slug} readOnly />
             <p className={styles.note} style={{ marginTop: "4px" }}>目前暫不支援變更 Slug。</p>
           </div>
 
           <div>
             <label className={styles.label} htmlFor="summary">摘要</label>
-            <textarea className={styles.textarea} id="summary" name="summary" placeholder="這篇文章在說什麼" defaultValue={initialData.summary} />
+            <textarea className={styles.textarea} id="summary" name="summary" placeholder="這篇內容在說什麼" defaultValue={initialData.summary} />
           </div>
 
           <div>
@@ -141,9 +138,9 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
           <div>
             <label className={styles.label} htmlFor="status">狀態</label>
             <select className={styles.select} id="status" name="status" defaultValue={initialData.status}>
-              <option value={postStatusConstants.DRAFT}>draft</option>
-              <option value={postStatusConstants.REVIEW}>review</option>
-              <option value={postStatusConstants.PUBLISHED}>published</option>
+              <option value={pageStatusConstants.DRAFT}>draft</option>
+              <option value={pageStatusConstants.REVIEW}>review</option>
+              <option value={pageStatusConstants.PUBLISHED}>published</option>
             </select>
           </div>
         </div>
@@ -152,12 +149,12 @@ export default function StudioForm({ initialData, saveAction, postStatusConstant
           <button className={styles.button} type="submit" disabled={isSaving}>
             {isSaving ? "正在儲存..." : "儲存變更"}
           </button>
-          
+
           {initialData.slug && (
-            <a 
-              href={`/post/${initialData.slug}`} 
-              target="_blank" 
-              className={styles.button} 
+            <a
+              href={`/page/${initialData.slug}`}
+              target="_blank"
+              className={styles.button}
               style={{ background: "#27272a", color: "#fafafa", border: "1px solid #3f3f46" }}
             >
               預覽文章 ↗

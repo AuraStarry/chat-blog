@@ -1,18 +1,18 @@
-import { listAllPosts } from "../src/lib/content/markdown.js";
+import { listAllPages } from "../src/lib/content/markdown.js";
 import { normalizeFrontmatter } from "../src/lib/content/schema.js";
 
 async function validate() {
   console.log("🔍 開始驗證內容規格...");
   try {
-    const posts = await listAllPosts();
-    console.log(`✅ 成功讀取 ${posts.length} 篇文章。`);
+    const pages = await listAllPages();
+    console.log(`✅ 成功讀取 ${pages.length} 篇內容。`);
     
-    for (const post of posts) {
+    for (const page of pages) {
       try {
-        normalizeFrontmatter(post);
-        console.log(`  - [PASS] ${post.slug}`);
+        normalizeFrontmatter(page);
+        console.log(`  - [PASS] ${page.slug}`);
       } catch (e) {
-        console.error(`  - [FAIL] ${post.slug}: 格式不符合 Zod Schema`);
+        console.error(`  - [FAIL] ${page.slug}: 格式不符合 Zod Schema`);
         console.error(e.errors || e.message);
         process.exit(1);
       }

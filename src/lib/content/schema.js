@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const POST_STATUS = {
+export const PAGE_STATUS = {
   DRAFT: "draft",
   REVIEW: "review",
   PUBLISHED: "published",
@@ -23,10 +23,10 @@ const dateCoerce = z.preprocess((val) => {
   return val;
 }, z.string().trim().default(""));
 
-export const postFrontmatterSchema = z.object({
+export const pageFrontmatterSchema = z.object({
   title: z.string().trim().min(1, "title is required"),
   slug: z.string().trim().min(1, "slug is required"),
-  status: z.enum([POST_STATUS.DRAFT, POST_STATUS.REVIEW, POST_STATUS.PUBLISHED]),
+  status: z.enum([PAGE_STATUS.DRAFT, PAGE_STATUS.REVIEW, PAGE_STATUS.PUBLISHED]),
   summary: z.string().trim().default(""),
   category: z.string().trim().default(""),
   tags: coerceStringArray.default([]),
@@ -39,17 +39,30 @@ export const postFrontmatterSchema = z.object({
 });
 
 export function normalizeFrontmatter(input) {
-  return postFrontmatterSchema.parse(input);
+  return pageFrontmatterSchema.parse(input);
 }
 
-export const chapterFrontmatterSchema = z.object({
-  title: z.string().trim().min(1, "title is required"),
-  slug: z.string().trim().min(1, "slug is required"),
-  status: z.enum([POST_STATUS.DRAFT, POST_STATUS.REVIEW, POST_STATUS.PUBLISHED]),
-  date: dateCoerce,
-  posts: z.array(z.string()).default([]), // List of post slugs
-});
+export const chapterFrontmatterSchema = z
+  .object({
+    title: z.string().trim().min(1, "title is required"),
+    slug: z.string().trim().min(1, "slug is required"),
+    status: z.enum([PAGE_STATUS.DRAFT, PAGE_STATUS.REVIEW, PAGE_STATUS.PUBLISHED]),
+    date: dateCoerce,
+    pages: z.array(z.string()).default([]),
+    posts: z.array(z.string()).optional(),
+  })
+  .transform((data) => ({
+    title: data.title,
+    slug: data.slug,
+    status: data.status,
+    date: data.date,
+    pages: data.pages.length > 0 ? data.pages : data.posts || [],
+  }));
 
 export function normalizeChapterFrontmatter(input) {
   return chapterFrontmatterSchema.parse(input);
 }
+
+// Backward-compatible aliases
+export const POST_STATUS = PAGE_STATUS;
+export const postFrontmatterSchema = pageFrontmatterSchema;

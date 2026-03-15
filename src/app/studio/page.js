@@ -1,5 +1,5 @@
-import { readPostBySlug } from "@/lib/content/markdown";
-import { POST_STATUS } from "@/lib/content/schema";
+import { readPageBySlug } from "@/lib/content/markdown";
+import { PAGE_STATUS } from "@/lib/content/schema";
 import StudioForm from "./StudioForm";
 import { createDraftAction } from "./actions";
 import styles from "./page.module.scss";
@@ -29,29 +29,29 @@ export default async function StudioPage({ searchParams }) {
     location_url: "",
     date: new Date().toISOString().slice(0, 10),
     content: "",
-    status: POST_STATUS.DRAFT,
+    status: PAGE_STATUS.DRAFT,
   };
 
   if (saved) {
     try {
-      const post = await readPostBySlug(saved);
+      const page = await readPageBySlug(saved);
       initialData = {
-        title: post.frontmatter.title || "",
-        slug: post.frontmatter.slug || saved,
-        summary: post.frontmatter.summary || "",
-        category: post.frontmatter.category || "",
-        tags: post.frontmatter.tags?.join(", ") || "",
-        cover_image: post.frontmatter.cover_image || "",
-        cover_image_alt: post.frontmatter.cover_image_alt || "",
-        location_name: post.frontmatter.location_name || "",
-        location_address: post.frontmatter.location_address || "",
-        location_url: post.frontmatter.location_url || "",
-        date: post.frontmatter.date || initialData.date,
-        content: post.content || "",
-        status: post.frontmatter.status || POST_STATUS.DRAFT,
+        title: page.frontmatter.title || "",
+        slug: page.frontmatter.slug || saved,
+        summary: page.frontmatter.summary || "",
+        category: page.frontmatter.category || "",
+        tags: page.frontmatter.tags?.join(", ") || "",
+        cover_image: page.frontmatter.cover_image || "",
+        cover_image_alt: page.frontmatter.cover_image_alt || "",
+        location_name: page.frontmatter.location_name || "",
+        location_address: page.frontmatter.location_address || "",
+        location_url: page.frontmatter.location_url || "",
+        date: page.frontmatter.date || initialData.date,
+        content: page.content || "",
+        status: page.frontmatter.status || PAGE_STATUS.DRAFT,
       };
     } catch (e) {
-      console.error("Failed to load post:", e);
+      console.error("Failed to load page:", e);
     }
   }
 
@@ -66,9 +66,9 @@ export default async function StudioPage({ searchParams }) {
         {saved ? (
           <div className={styles.card} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <p className={styles.success} style={{ margin: 0 }}>正在編輯：{saved}.md</p>
-            <a 
-              href={`/post/${saved}`} 
-              target="_blank" 
+            <a
+              href={`/page/${saved}`}
+              target="_blank"
               rel="noopener noreferrer"
               className={styles.button}
               style={{ padding: "4px 12px", fontSize: "12px", background: "#1e1e2e", border: "1px solid #313244" }}
@@ -78,11 +78,7 @@ export default async function StudioPage({ searchParams }) {
           </div>
         ) : null}
 
-        <StudioForm 
-          initialData={initialData} 
-          saveAction={createDraftAction} 
-          postStatusConstants={POST_STATUS} 
-        />
+        <StudioForm initialData={initialData} saveAction={createDraftAction} pageStatusConstants={PAGE_STATUS} />
       </div>
     </main>
   );

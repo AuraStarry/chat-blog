@@ -7,7 +7,7 @@ export default function ChapterMap({ locations }) {
   const [error, setError] = useState(null);
   const [activeLoc, setActiveLoc] = useState(null);
 
-  const handleJumpToPost = (slug) => {
+  const handleJumpToPage = (slug) => {
     if (typeof window === 'undefined' || !slug) return;
 
     const target = document.getElementById(slug);
@@ -220,7 +220,7 @@ export default function ChapterMap({ locations }) {
                     href={`#${activeLoc.slug}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      handleJumpToPost(activeLoc.slug);
+                      handleJumpToPage(activeLoc.slug);
                     }}
                     className="bg-slate-900 text-white py-3 rounded-xl text-xs font-bold text-center"
                   >

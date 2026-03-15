@@ -53,7 +53,7 @@
 - **自動化**：每篇文章儲存後，API 即時連動更新
 
 ### 7) 冊 (Chapter) 模式 — Play List 內容頁
-- **概述**：將多個「單一主題 (Post)」集結成冊，具備排序性的連續內容。
+- **概述**：將多個「單一主題 (Page)」集結成冊，具備排序性的連續內容。
 - **呈現形式**：
   - **頂部地圖**：自動打撈冊中所有文章的地點資訊，並在 Map 上插針（針頭樣式為文章標題關鍵字）。
   - **內容清單**：下方為 Collapsed 列表，顯示各篇標題，點擊展開完整內容。
@@ -92,26 +92,27 @@
 1. **地圖功能強化**：
    - [ ] 串接正式 Google Maps API Key（目前為預留區塊）。
    - [ ] 在 Chapter 頁面實現互動式地圖（Mapbox 或 Google Maps JS SDK）。
-2. **內容組織優化 (Folder-per-Post)**：
+2. **內容組織優化 (Folder-per-Page)**：
    - [ ] 實作圖片儲存重構：未來新文章的圖片需存放在 `public/uploads/{slug}/` 資料夾下，而非散落在 `uploads/` 根目錄。
    - [ ] 更新 `EDITING_SKILL.md` 規範 Agent 在起草時自動建立對應資料夾並移動檔案。
 
 ---
 
 ## 變更紀錄
+- 2026-03-15：全案將「post」概念更名為「page」。新增 `/page/[slug]` 路由與 `/api/pages` 介面、Studio/首頁/Chapter 改用 page 命名；`/post/[slug]` 保留 redirect；內容檔案移至 `content/pages/`，並保持 `content/posts/` fallback 以兼容舊資料。完成 `validate-content` 驗證。
 - 2026-03-15：修正 Chapter 地圖在手機版高度未填滿容器的視覺破版。將地圖容器改為 `h-[300px]`（桌面維持 `md:aspect-[16/10]`），並把地圖掛載節點改為 `absolute inset-0`，確保地圖圖層可完整貼齊容器高度。
 - 2026-03-15：移除 Chapter 地圖除錯殘留。清除 `page.js` 的 `[Debug] Map Active` 與隱藏 debug counter，並移除 `ChapterMap.js` 內大量 `console.log/console.warn` 與 key 指紋診斷邏輯，保留正式運行所需流程與錯誤訊息顯示。
 - 2026-03-15：修正 Chapter 頁手機版地圖偶發寬度溢出。為地圖容器加入 `chapter-map-shell` 響應式保護（`w-full/max-w-full/min-w-0`），並在 `globals.css` 新增 Google Maps 專用樣式（`gm-style img { max-width: none }`）避免 tile/內層元素造成寬度異常。
 - 2026-03-15：修正文章 `osawa-station-shuttle-and-fare-proof` 的地點資訊，`location_name/location_address/location_url` 改為指定座標點「大澤（新潟）」，避免地圖指向錯誤地標。
 - 2026-03-15：優化 Chapter 資訊卡「跳轉到段落」互動。點擊按鈕後會先自動展開對應 `details` 區塊，再 smooth scroll 到該段落，避免跳轉後仍維持折疊狀態。
 - 2026-03-15：Chapter 地圖插針樣式調整。`src/components/ChapterMap.js` 將客製黑點（SymbolPath.CIRCLE）改為 Google Maps 預設 Marker pin，保留既有點擊插針開啟資訊卡、跳轉段落與外連 Google Maps 的互動。
-- 2026-03-15：修復 Post / Chapter 的 Google Maps 外連穩定性。新增 `src/lib/googleMaps.js`，對 `maps.app.goo.gl` / `goo.gl/maps` 轉導短連結自動轉換為 `google.com/maps/search` 直連；同步更新既有文章 frontmatter 的 `location_url`，並在 `EDITING_SKILL.md` 明確禁止使用轉導短網址。
+- 2026-03-15：修復 Page / Chapter 的 Google Maps 外連穩定性。新增 `src/lib/googleMaps.js`，對 `maps.app.goo.gl` / `goo.gl/maps` 轉導短連結自動轉換為 `google.com/maps/search` 直連；同步更新既有文章 frontmatter 的 `location_url`，並在 `EDITING_SKILL.md` 明確禁止使用轉導短網址。
 - 2026-03-01：建立 `chat-blog/PROJECT.md`，整理並凍結目前已確認需求；明確標註暫不建立程式環境，等待下一步架構討論。
-- 2026-03-01：完成最小可跑環境初始化（Next.js App Router / JavaScript / Tailwind / ESLint），並加入 `sass`, `gray-matter`, `remark*`, `rehype-stringify`, `zod`, `date-fns`, `slugify` 依賴；建立 `content/posts` 與 `src/lib/content`、`src/lib/publish` 目錄骨架。
-- 2026-03-01：完成第一版內容層與共編頁骨架：新增 frontmatter schema、MD 讀寫/儲存 utility、`/studio` 手機單欄 GUI（可儲存 draft 並寫回 `content/posts/<slug>.md`）。
-- 2026-03-13：實作「AI/機器介面」規範：新增 `listAllPosts` utility 與 `/api/content`, `/api/content/[slug]` 路由，支援結構化資料打撈；更新 `PROJECT.md` 將機器介面納入核心規格。
+- 2026-03-01：完成最小可跑環境初始化（Next.js App Router / JavaScript / Tailwind / ESLint），並加入 `sass`, `gray-matter`, `remark*`, `rehype-stringify`, `zod`, `date-fns`, `slugify` 依賴；建立 `content/pages` 與 `src/lib/content`、`src/lib/publish` 目錄骨架。
+- 2026-03-01：完成第一版內容層與共編頁骨架：新增 frontmatter schema、MD 讀寫/儲存 utility、`/studio` 手機單欄 GUI（可儲存 draft 並寫回 `content/pages/<slug>.md`）。
+- 2026-03-13：實作「AI/機器介面」規範：新增 `listAllPages` utility 與 `/api/pages`, `/api/pages/[slug]` 路由，支援結構化資料打撈；更新 `PROJECT.md` 將機器介面納入核心規格。
 - 2026-03-13：修復 `/studio` 路由 404 問題（重新命名目錄並移除 Route Group 衝突）；實作 Studio 頁面的草稿讀取功能，支援透過 `?saved=slug` 載入現有內容進行編輯。
-- 2026-03-13：優化 Post 頁面排版：移除作者欄、精簡標題區塊、修正 Summary 重複顯示問題、增加 Google Maps Embed 預留區塊。同時更新 `EDITING_SKILL.md`，將地點統一規範為「地標 (Place / POI)」，要求 Agent 必須搜尋精確的正式名稱與 Google Maps 分享連結。
+- 2026-03-13：優化 Page 頁面排版：移除作者欄、精簡標題區塊、修正 Summary 重複顯示問題、增加 Google Maps Embed 預留區塊。同時更新 `EDITING_SKILL.md`，將地點統一規範為「地標 (Place / POI)」，要求 Agent 必須搜尋精確的正式名稱與 Google Maps 分享連結。
 - 2026-03-13：實作 Markdown 渲染引擎。整合 `remark-gfm`, `remark-breaks` 與 `rehype-stringify`；支援 GFM 與強制換行，並套用 Tailwind Typography (Prose) 樣式。
 - 2026-03-13：新增文章 `ishiuchi-station-quiet-moments`。實作對話素材轉化流程：自動搬移圖片至 `public/uploads/`、檢索 Google Maps 地標資訊、並依據 `EDITING_SKILL.md` 起草 Draft。
 - 2026-03-14：新增文章 `osawa-station-shuttle-and-fare-proof`。記錄里山十帖的大澤站接駁與無人車站乘車證明領取流程。更新 PROJECT.md 並完成 Git 同步。

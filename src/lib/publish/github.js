@@ -39,7 +39,7 @@ async function getFileSha(path) {
 
 /**
  * Commits a file to GitHub.
- * @param {string} path - Path within the repo (e.g., "content/posts/my-post.md")
+ * @param {string} path - Path within the repo (e.g., "content/pages/my-page.md")
  * @param {string} content - Raw file content (text)
  * @param {string} message - Commit message
  */
