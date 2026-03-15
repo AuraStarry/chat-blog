@@ -101,6 +101,13 @@
 
 ---
 
+## Git Collaboration Rule (Current)
+
+- 開始任何專案異動前，先同步遠端：`git fetch --all --prune`。
+- 若 `origin/main` 有新提交，先 `git pull --rebase origin main`，再開始修改。
+- 目前流程採 **直推 `main`**（效率優先）。
+- 若出現 merge/rebase 衝突，先整理衝突檔案與改動差異摘要，回報並取得使用者確認後再解決。
+
 ## Notes
 
 - 本專案的實際環境初始化，需先對照 `Life-Hiker-Studio` 的熟悉架構再定案。
