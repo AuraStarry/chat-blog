@@ -56,14 +56,10 @@ export default async function ChapterPage({ params }) {
             <span>•</span>
             <time>{frontmatter.date}</time>
           </div>
-          <div className="hidden" id="debug-locations-count">{locations.length}</div>
         </header>
 
         {locations.length > 0 && (
           <div className="relative w-full max-w-full min-w-0">
-            <div className="absolute -top-6 left-0 text-[10px] font-mono text-slate-300">
-              [Debug] Map Active: {locations.length} locations
-            </div>
             <ChapterMapClient locations={locations} />
           </div>
         )}

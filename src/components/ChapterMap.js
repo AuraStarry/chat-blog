@@ -48,35 +48,6 @@ export default function ChapterMap({ locations }) {
     if (!isVisible || !mapRef.current) return;
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    
-    // Enhanced Debug logging (Safe: only show first/last 4 chars)
-    const maskedKey = apiKey ? `${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}` : 'null';
-    const preloadedImportLibrary = !!window?.google?.maps?.importLibrary;
-    const existingMapsScript = document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]');
-    let scriptKeyMasked = 'none';
-
-    if (existingMapsScript?.src) {
-      try {
-        const scriptUrl = new URL(existingMapsScript.src);
-        const runtimeKey = scriptUrl.searchParams.get('key');
-        scriptKeyMasked = runtimeKey
-          ? `${runtimeKey.substring(0, 4)}...${runtimeKey.substring(runtimeKey.length - 4)}`
-          : 'missing-in-script';
-      } catch {
-        scriptKeyMasked = 'parse-failed';
-      }
-    }
-
-    console.log('[ChapterMap] API Key Check:', {
-      present: !!apiKey,
-      length: apiKey?.length || 0,
-      masked: maskedKey,
-      envName: 'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY',
-      preloadedImportLibrary,
-      existingMapsScript: !!existingMapsScript,
-      scriptKeyMasked,
-      envVsScriptKeyMatch: scriptKeyMasked === 'none' ? 'no-script-yet' : maskedKey === scriptKeyMasked,
-    });
 
     if (!apiKey || apiKey === 'undefined' || apiKey.length < 10) {
       setError('Missing or invalid NEXT_PUBLIC_GOOGLE_MAPS_API_KEY. 請檢查 .env.local 或 Vercel 設定。');
@@ -87,45 +58,14 @@ export default function ChapterMap({ locations }) {
 
     const initMap = async () => {
       try {
-        console.log('[ChapterMap] initMap started...');
-        if (window?.google?.maps?.importLibrary) {
-          console.warn('[ChapterMap] Detected preloaded google.maps.importLibrary before setOptions. Existing runtime may ignore new options.');
-        }
-
         setOptions({
           key: apiKey,
           v: 'weekly',
           language: 'zh-TW',
         });
 
-        // Load libraries separately to ensure they are captured correctly
-        console.log('[ChapterMap] Loading libraries...');
         const mapsLib = await importLibrary('maps');
         const geocodingLib = await importLibrary('geocoding');
-
-        const mapsScriptAfterLoad = document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]');
-        let scriptKeyMaskedAfterLoad = 'none';
-        let legacyApiKeyParamDetected = false;
-        if (mapsScriptAfterLoad?.src) {
-          try {
-            const scriptUrl = new URL(mapsScriptAfterLoad.src);
-            const runtimeKey = scriptUrl.searchParams.get('key');
-            legacyApiKeyParamDetected = scriptUrl.searchParams.has('api_key');
-            scriptKeyMaskedAfterLoad = runtimeKey
-              ? `${runtimeKey.substring(0, 4)}...${runtimeKey.substring(runtimeKey.length - 4)}`
-              : 'missing-in-script';
-          } catch {
-            scriptKeyMaskedAfterLoad = 'parse-failed';
-          }
-        }
-
-        console.log('[ChapterMap] Libraries loaded objects:', {
-          mapsLib: !!mapsLib,
-          geocodingLib: !!geocodingLib,
-          scriptKeyMaskedAfterLoad,
-          legacyApiKeyParamDetected,
-          envVsRuntimeKeyMatch: scriptKeyMaskedAfterLoad === 'none' ? 'no-script-found' : maskedKey === scriptKeyMaskedAfterLoad,
-        });
 
         if (!isMounted || !mapRef.current) return;
 
@@ -137,13 +77,6 @@ export default function ChapterMap({ locations }) {
         const LatLngBoundsClass = mapsLib.LatLngBounds || maps.LatLngBounds;
         const GeocoderClass = geocodingLib.Geocoder || maps.Geocoder;
         const MarkerClass = mapsLib.Marker || maps.Marker;
-
-        console.log('[ChapterMap] Constructor check:', {
-          Map: typeof MapClass,
-          Bounds: typeof LatLngBoundsClass,
-          Geocoder: typeof GeocoderClass,
-          Marker: typeof MarkerClass
-        });
 
         if (!MapClass || !GeocoderClass || !MarkerClass || !LatLngBoundsClass) {
           throw new Error(`缺少必要的建構子 (Map:${!!MapClass}, Geocoder:${!!GeocoderClass}, Marker:${!!MarkerClass}, Bounds:${!!LatLngBoundsClass})`);
@@ -166,17 +99,13 @@ export default function ChapterMap({ locations }) {
         const geocoder = new GeocoderClass();
         const bounds = new LatLngBoundsClass();
 
-        // Geocode addresses
-        console.log('[ChapterMap] Geocoding', locations.length, 'locations...');
         const results = await Promise.all(
           locations.map(loc => {
             return new Promise((resolve) => {
               geocoder.geocode({ address: loc.name }, (res, status) => {
                 if (status === 'OK' && res?.[0]) {
-                  console.log(`[ChapterMap] Geocoded ${loc.name} ->`, res[0].geometry.location.toString());
                   resolve({ ...loc, position: res[0].geometry.location });
                 } else {
-                  console.warn(`[ChapterMap] Geocoding failed for ${loc.name}: ${status}`);
                   resolve(null);
                 }
               });
@@ -187,9 +116,6 @@ export default function ChapterMap({ locations }) {
         if (!isMounted) return;
 
         const validResults = results.filter(Boolean);
-        console.log('[ChapterMap] Valid locations found:', validResults.length);
-        
-        // This state update triggers the UI change from "Initializing..."
         setMarkerCount(validResults.length);
 
         if (validResults.length > 0) {
@@ -209,13 +135,11 @@ export default function ChapterMap({ locations }) {
             markersRef.current.push(marker);
           });
           mapInstance.fitBounds(bounds, 50);
-          console.log('[ChapterMap] Map initialization complete with markers.');
         } else {
           // If no locations were geocoded, show an error instead of infinite loading
           setError('無法取得任何地點的地理座標，請檢查 Geocoding API 是否啟用。');
         }
       } catch (err) {
-        console.error('[ChapterMap] Map init error:', err);
         if (isMounted) setError(err.message);
       }
     };

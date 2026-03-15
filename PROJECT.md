@@ -99,6 +99,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-15：移除 Chapter 地圖除錯殘留。清除 `page.js` 的 `[Debug] Map Active` 與隱藏 debug counter，並移除 `ChapterMap.js` 內大量 `console.log/console.warn` 與 key 指紋診斷邏輯，保留正式運行所需流程與錯誤訊息顯示。
 - 2026-03-15：修正 Chapter 頁手機版地圖偶發寬度溢出。為地圖容器加入 `chapter-map-shell` 響應式保護（`w-full/max-w-full/min-w-0`），並在 `globals.css` 新增 Google Maps 專用樣式（`gm-style img { max-width: none }`）避免 tile/內層元素造成寬度異常。
 - 2026-03-15：修正文章 `osawa-station-shuttle-and-fare-proof` 的地點資訊，`location_name/location_address/location_url` 改為指定座標點「大澤（新潟）」，避免地圖指向錯誤地標。
 - 2026-03-15：優化 Chapter 資訊卡「跳轉到段落」互動。點擊按鈕後會先自動展開對應 `details` 區塊，再 smooth scroll 到該段落，避免跳轉後仍維持折疊狀態。
