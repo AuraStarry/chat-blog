@@ -2,6 +2,25 @@ import Link from "next/link";
 import { listAllPages } from "@/lib/content/markdown";
 import PrivateDrafts from "./PrivateDrafts";
 
+export const metadata = {
+  title: "首頁",
+  description: "探索 Gore 與 Aura 的數位花園：精選已發布 pages 與主題 chapter。",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "chat-blog | Gore & Aura's shared digital garden",
+    description: "探索 Gore 與 Aura 的數位花園：精選已發布 pages 與主題 chapter。",
+    url: "/",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "chat-blog | Gore & Aura's shared digital garden",
+    description: "探索 Gore 與 Aura 的數位花園：精選已發布 pages 與主題 chapter。",
+  },
+};
+
 export default async function HomePage() {
   const pages = await listAllPages();
   const publishedPages = pages.filter((p) => p.status === "published");
@@ -13,7 +32,7 @@ export default async function HomePage() {
         <header className="mb-12 flex justify-between items-end">
           <div>
             <h1 className="text-4xl font-bold tracking-tight">chat-blog</h1>
-            <p className="mt-2 text-zinc-500 font-medium">Gore & Aura's shared digital garden.</p>
+            <p className="mt-2 text-zinc-500 font-medium">Gore & Aura shared digital garden.</p>
           </div>
           <Link
             href="/studio"

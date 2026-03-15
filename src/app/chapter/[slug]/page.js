@@ -3,6 +3,56 @@ import { normalizeGoogleMapsUrl } from "@/lib/googleMaps";
 import { notFound } from "next/navigation";
 import ChapterMapClient from "@/components/ChapterMapClient";
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+
+  try {
+    const chapter = await readChapterBySlug(slug);
+    const { frontmatter, pages } = chapter;
+    const title = frontmatter.title || "Chapter";
+    const description =
+      frontmatter.summary || `收錄 ${pages.length} 篇 page 的 chapter 精選。`;
+
+    return {
+      title,
+      description,
+      alternates: {
+        canonical: `/chapter/${slug}`,
+      },
+      openGraph: {
+        type: "article",
+        url: `/chapter/${slug}`,
+        title,
+        description,
+        publishedTime: frontmatter.date,
+        images: frontmatter.cover_image
+          ? [
+              {
+                url: frontmatter.cover_image,
+                alt: frontmatter.cover_image_alt || title,
+              },
+            ]
+          : undefined,
+      },
+      twitter: {
+        card: frontmatter.cover_image ? "summary_large_image" : "summary",
+        title,
+        description,
+        images: frontmatter.cover_image ? [frontmatter.cover_image] : undefined,
+      },
+    };
+  } catch {
+    return {
+      title: "Chapter not found",
+      description: "找不到指定的 chapter。",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+}
+
 export default async function ChapterPage({ params }) {
   const { slug: paramsSlug } = await params;
 

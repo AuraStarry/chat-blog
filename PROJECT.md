@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-15：完成首頁 / Page / Chapter 的 SEO 與社群分享 metadata 強化。更新 `src/app/layout.js` 全站預設（metadataBase、canonical、Open Graph、Twitter、robots、title template），並在 `src/app/page/[slug]/page.js`、`src/app/chapter/[slug]/page.js` 新增 `generateMetadata` 以輸出動態 title/description/OG/Twitter（含封面圖、canonical 與 not found noindex）。
 - 2026-03-15：新增 Chapter Studio 編輯頁 ` /studio/chapter `（含密碼保護、儲存、預覽、Page 搜尋追加、去重、排序與移除）。支援以 `?saved={slug}` 讀取既有 chapter，並新增 `saveChapterAction` 串接 `saveChapter`。
 - 2026-03-15：擴充 Chapter frontmatter schema（`summary`, `cover_image`, `cover_image_alt`），並新增 `listAllChapters()` 統一章節讀取流程；`/api/chapters` 改用 content utility，避免重複實作。
 - 2026-03-15：修正 Studio「查看預覽 ↗」按鈕在深色模式的可視性。移除行內暗底樣式改為 `previewButton` class，統一白字深底，並補上 `:visited/:active/:focus` 顏色繼承避免連結狀態導致文字變暗。

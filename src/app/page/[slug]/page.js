@@ -2,6 +2,55 @@ import { readPageBySlug, renderMarkdown } from "@/lib/content/markdown";
 import { normalizeGoogleMapsUrl } from "@/lib/googleMaps";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+
+  try {
+    const page = await readPageBySlug(slug);
+    const { frontmatter } = page;
+    const title = frontmatter.title || "Page";
+    const description = frontmatter.summary || "閱讀 chat-blog 的精選 page 內容。";
+
+    return {
+      title,
+      description,
+      alternates: {
+        canonical: `/page/${slug}`,
+      },
+      openGraph: {
+        type: "article",
+        url: `/page/${slug}`,
+        title,
+        description,
+        publishedTime: frontmatter.date,
+        images: frontmatter.cover_image
+          ? [
+              {
+                url: frontmatter.cover_image,
+                alt: frontmatter.cover_image_alt || title,
+              },
+            ]
+          : undefined,
+      },
+      twitter: {
+        card: frontmatter.cover_image ? "summary_large_image" : "summary",
+        title,
+        description,
+        images: frontmatter.cover_image ? [frontmatter.cover_image] : undefined,
+      },
+    };
+  } catch {
+    return {
+      title: "Page not found",
+      description: "找不到指定的 page。",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+}
+
 export default async function PageDetail({ params }) {
   const { slug } = await params;
 
