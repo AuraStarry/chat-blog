@@ -119,3 +119,4 @@
 - 2026-03-14：修正 `@googlemaps/js-api-loader` v2 兼容性問題。升級至功能性 API (`setOptions`, `importLibrary`)，並優化 legacy Marker 與全域命名空間的存取邏輯。
 - 2026-03-14：實作 ChapterMap 延遲載入 (Lazy Loading) 與除錯增強。使用 Intersection Observer 確保地圖僅在進入視線時載入，以節省 API 費用並防止爬蟲觸發；增加 API Key 狀態之 Console Log 以排除環境變數未生效問題。
 - 2026-03-15：針對 ChapterMap 加強「實際載入 key」診斷機制。新增 preloaded `google.maps.importLibrary` 偵測、script URL `key` 指紋比對（masked）、以及 env key 與 runtime key 一致性檢查，協助定位 `REQUEST_DENIED / ApiProjectMapError` 是否由既有 SDK runtime 汙染或 key 來源錯置導致。
+- 2026-03-15：確認 ChapterMap 的 `@googlemaps/js-api-loader` 參數使用錯誤。`setOptions` 原先誤用 `apiKey`，導致 loader 產生 `api_key` 查詢參數而非 Google Maps 所需的 `key`，造成 Geocoding `REQUEST_DENIED`。已修正為 `key`（並同步 `v: 'weekly'`），另保留 `legacyApiKeyParamDetected` 診斷欄位驗證修復結果。

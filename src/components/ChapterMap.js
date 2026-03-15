@@ -79,8 +79,8 @@ export default function ChapterMap({ locations }) {
         }
 
         setOptions({
-          apiKey: apiKey,
-          version: 'weekly',
+          key: apiKey,
+          v: 'weekly',
           language: 'zh-TW',
         });
 
@@ -91,10 +91,12 @@ export default function ChapterMap({ locations }) {
 
         const mapsScriptAfterLoad = document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]');
         let scriptKeyMaskedAfterLoad = 'none';
+        let legacyApiKeyParamDetected = false;
         if (mapsScriptAfterLoad?.src) {
           try {
             const scriptUrl = new URL(mapsScriptAfterLoad.src);
             const runtimeKey = scriptUrl.searchParams.get('key');
+            legacyApiKeyParamDetected = scriptUrl.searchParams.has('api_key');
             scriptKeyMaskedAfterLoad = runtimeKey
               ? `${runtimeKey.substring(0, 4)}...${runtimeKey.substring(runtimeKey.length - 4)}`
               : 'missing-in-script';
@@ -107,6 +109,7 @@ export default function ChapterMap({ locations }) {
           mapsLib: !!mapsLib,
           geocodingLib: !!geocodingLib,
           scriptKeyMaskedAfterLoad,
+          legacyApiKeyParamDetected,
           envVsRuntimeKeyMatch: scriptKeyMaskedAfterLoad === 'none' ? 'no-script-found' : maskedKey === scriptKeyMaskedAfterLoad,
         });
 
