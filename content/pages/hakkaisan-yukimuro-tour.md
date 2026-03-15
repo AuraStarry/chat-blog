@@ -1,5 +1,5 @@
 ---
-title: 八海山雪室見學：半小時一場，值得專程排進行程
+title: 八海山雪室見學
 slug: hakkaisan-yukimuro-tour
 status: published
 summary: 八海醸造「魚沼之里」雪中貯蔵庫見學ツアー實訪紀錄：場次節奏、購票集合、語言限制與交通建議一次整理。
@@ -15,7 +15,8 @@ cover_image_alt: 八海山雪室導覽中的釀造設備區
 date: '2026-03-14'
 location_name: 八海醸造 魚沼の里
 location_address: 〒949-7112 新潟県南魚沼市長森426-1
-location_url: 'https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E6%B5%B7%E9%86%B8%E9%80%A0+%E9%AD%9A%E6%B2%BC%E3%81%AE%E9%87%8C+%E6%96%B0%E6%BD%9F%E7%9C%8C%E5%8D%97%E9%AD%9A%E6%B2%BC%E5%B8%82%E9%95%B7%E6%A3%AE426-1'
+location_url: >-
+  https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E6%B5%B7%E9%86%B8%E9%80%A0+%E9%AD%9A%E6%B2%BC%E3%81%AE%E9%87%8C+%E6%96%B0%E6%BD%9F%E7%9C%8C%E5%8D%97%E9%AD%9A%E6%B2%BC%E5%B8%82%E9%95%B7%E6%A3%AE426-1
 ---
 
 ## 如果只選一個重點行程，就是雪室導覽
