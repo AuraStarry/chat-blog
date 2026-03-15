@@ -118,3 +118,4 @@
 - 2026-03-14：修復 Chapter 頁面地圖消失問題。移除 `next/dynamic` 改用 `useEffect` 控管 Client-only 渲染；增加 `min-h-[300px]` 防止容器高度塌陷；加入 Debug 標籤與更詳細的初始化狀態提示。
 - 2026-03-14：修正 `@googlemaps/js-api-loader` v2 兼容性問題。升級至功能性 API (`setOptions`, `importLibrary`)，並優化 legacy Marker 與全域命名空間的存取邏輯。
 - 2026-03-14：實作 ChapterMap 延遲載入 (Lazy Loading) 與除錯增強。使用 Intersection Observer 確保地圖僅在進入視線時載入，以節省 API 費用並防止爬蟲觸發；增加 API Key 狀態之 Console Log 以排除環境變數未生效問題。
+- 2026-03-15：針對 ChapterMap 加強「實際載入 key」診斷機制。新增 preloaded `google.maps.importLibrary` 偵測、script URL `key` 指紋比對（masked）、以及 env key 與 runtime key 一致性檢查，協助定位 `REQUEST_DENIED / ApiProjectMapError` 是否由既有 SDK runtime 汙染或 key 來源錯置導致。

@@ -37,11 +37,31 @@ export default function ChapterMap({ locations }) {
     
     // Enhanced Debug logging (Safe: only show first/last 4 chars)
     const maskedKey = apiKey ? `${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}` : 'null';
+    const preloadedImportLibrary = !!window?.google?.maps?.importLibrary;
+    const existingMapsScript = document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]');
+    let scriptKeyMasked = 'none';
+
+    if (existingMapsScript?.src) {
+      try {
+        const scriptUrl = new URL(existingMapsScript.src);
+        const runtimeKey = scriptUrl.searchParams.get('key');
+        scriptKeyMasked = runtimeKey
+          ? `${runtimeKey.substring(0, 4)}...${runtimeKey.substring(runtimeKey.length - 4)}`
+          : 'missing-in-script';
+      } catch {
+        scriptKeyMasked = 'parse-failed';
+      }
+    }
+
     console.log('[ChapterMap] API Key Check:', {
       present: !!apiKey,
       length: apiKey?.length || 0,
       masked: maskedKey,
-      envName: 'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY'
+      envName: 'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY',
+      preloadedImportLibrary,
+      existingMapsScript: !!existingMapsScript,
+      scriptKeyMasked,
+      envVsScriptKeyMatch: scriptKeyMasked === 'none' ? 'no-script-yet' : maskedKey === scriptKeyMasked,
     });
 
     if (!apiKey || apiKey === 'undefined' || apiKey.length < 10) {
@@ -54,6 +74,10 @@ export default function ChapterMap({ locations }) {
     const initMap = async () => {
       try {
         console.log('[ChapterMap] initMap started...');
+        if (window?.google?.maps?.importLibrary) {
+          console.warn('[ChapterMap] Detected preloaded google.maps.importLibrary before setOptions. Existing runtime may ignore new options.');
+        }
+
         setOptions({
           apiKey: apiKey,
           version: 'weekly',
@@ -64,8 +88,27 @@ export default function ChapterMap({ locations }) {
         console.log('[ChapterMap] Loading libraries...');
         const mapsLib = await importLibrary('maps');
         const geocodingLib = await importLibrary('geocoding');
-        
-        console.log('[ChapterMap] Libraries loaded objects:', { mapsLib: !!mapsLib, geocodingLib: !!geocodingLib });
+
+        const mapsScriptAfterLoad = document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]');
+        let scriptKeyMaskedAfterLoad = 'none';
+        if (mapsScriptAfterLoad?.src) {
+          try {
+            const scriptUrl = new URL(mapsScriptAfterLoad.src);
+            const runtimeKey = scriptUrl.searchParams.get('key');
+            scriptKeyMaskedAfterLoad = runtimeKey
+              ? `${runtimeKey.substring(0, 4)}...${runtimeKey.substring(runtimeKey.length - 4)}`
+              : 'missing-in-script';
+          } catch {
+            scriptKeyMaskedAfterLoad = 'parse-failed';
+          }
+        }
+
+        console.log('[ChapterMap] Libraries loaded objects:', {
+          mapsLib: !!mapsLib,
+          geocodingLib: !!geocodingLib,
+          scriptKeyMaskedAfterLoad,
+          envVsRuntimeKeyMatch: scriptKeyMaskedAfterLoad === 'none' ? 'no-script-found' : maskedKey === scriptKeyMaskedAfterLoad,
+        });
 
         if (!isMounted || !mapRef.current) return;
 
