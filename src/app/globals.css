@@ -18,3 +18,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Chapter map mobile overflow guard */
+.chapter-map-shell {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.chapter-map-shell .gm-style,
+.chapter-map-shell .gm-style > div {
+  max-width: 100%;
+}
+
+.chapter-map-shell .gm-style img {
+  max-width: none !important;
+}
