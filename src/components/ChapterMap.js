@@ -158,7 +158,7 @@ export default function ChapterMap({ locations }) {
   return (
     <div 
       ref={containerRef}
-      className="chapter-map-shell w-full max-w-full min-w-0 mb-12 bg-slate-100 rounded-3xl overflow-hidden aspect-[16/10] min-h-[300px] relative border border-slate-200 shadow-sm"
+      className="chapter-map-shell w-full max-w-full min-w-0 mb-12 bg-slate-100 rounded-3xl overflow-hidden h-[300px] md:h-auto md:aspect-[16/10] relative border border-slate-200 shadow-sm"
     >
       {!isVisible ? (
         <div className="absolute inset-0 flex items-center justify-center">
@@ -166,7 +166,7 @@ export default function ChapterMap({ locations }) {
         </div>
       ) : (
         <>
-          <div ref={mapRef} className="w-full h-full" />
+          <div ref={mapRef} className="absolute inset-0" />
           
           {error && (
             <div className="absolute inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center z-20">
