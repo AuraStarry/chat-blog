@@ -1,4 +1,5 @@
 import { readChapterBySlug, renderMarkdown } from "@/lib/content/markdown";
+import { normalizeGoogleMapsUrl } from "@/lib/googleMaps";
 import { notFound } from "next/navigation";
 import ChapterMapClient from "@/components/ChapterMapClient";
 
@@ -26,7 +27,11 @@ export default async function ChapterPage({ params }) {
         cover_image: post.frontmatter.cover_image || "",
         location_name: post.frontmatter.location_name || "",
         location_address: post.frontmatter.location_address || "",
-        location_url: post.frontmatter.location_url || "",
+        location_url: normalizeGoogleMapsUrl(
+          post.frontmatter.location_url || "",
+          post.frontmatter.location_name || "",
+          post.frontmatter.location_address || ""
+        ),
         htmlContent: html || ""
       };
     })

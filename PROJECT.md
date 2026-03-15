@@ -99,6 +99,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-15：修復 Post / Chapter 的 Google Maps 外連穩定性。新增 `src/lib/googleMaps.js`，對 `maps.app.goo.gl` / `goo.gl/maps` 轉導短連結自動轉換為 `google.com/maps/search` 直連；同步更新既有文章 frontmatter 的 `location_url`，並在 `EDITING_SKILL.md` 明確禁止使用轉導短網址。
 - 2026-03-01：建立 `chat-blog/PROJECT.md`，整理並凍結目前已確認需求；明確標註暫不建立程式環境，等待下一步架構討論。
 - 2026-03-01：完成最小可跑環境初始化（Next.js App Router / JavaScript / Tailwind / ESLint），並加入 `sass`, `gray-matter`, `remark*`, `rehype-stringify`, `zod`, `date-fns`, `slugify` 依賴；建立 `content/posts` 與 `src/lib/content`、`src/lib/publish` 目錄骨架。
 - 2026-03-01：完成第一版內容層與共編頁骨架：新增 frontmatter schema、MD 讀寫/儲存 utility、`/studio` 手機單欄 GUI（可儲存 draft 並寫回 `content/posts/<slug>.md`）。

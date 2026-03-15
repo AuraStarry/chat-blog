@@ -42,7 +42,7 @@
 ## 4. 地點與地標 (Places / POI) 資訊處理
 - **精確檢索**：若內容提及特定店家、名勝古蹟、或任何地圖上的「地標 (Place)」，Agent 必須使用 `web_search` 查找該地點的：
   - **正式地標名稱 (Place Name)**：確保為 Google Maps 上註冊的正式名稱。
-  - **Google Maps 連結**：優先使用包含地標名稱的分享連結。
+  - **Google Maps 連結**：禁止使用 `maps.app.goo.gl`、`goo.gl/maps` 等短網址轉導連結；請使用可直接開啟的正式連結（建議 `https://www.google.com/maps/search/?api=1&query=...` 或 `https://www.google.com/maps/place/...`）。
   - **完整地址**：用於輔助顯示。
 - **欄位存儲**：將資訊填入 frontmatter：
   - `location_name`: 地標正式名稱。

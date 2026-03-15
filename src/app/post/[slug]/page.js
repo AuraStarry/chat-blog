@@ -1,4 +1,5 @@
 import { readPostBySlug, renderMarkdown } from "@/lib/content/markdown";
+import { normalizeGoogleMapsUrl } from "@/lib/googleMaps";
 import { notFound } from "next/navigation";
 
 export default async function PostPage({ params }) {
@@ -13,6 +14,11 @@ export default async function PostPage({ params }) {
 
   const { frontmatter, content } = post;
   const htmlContent = await renderMarkdown(content);
+  const mapsUrl = normalizeGoogleMapsUrl(
+    frontmatter.location_url,
+    frontmatter.location_name,
+    frontmatter.location_address
+  );
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-900 font-sans">
@@ -72,9 +78,9 @@ export default async function PostPage({ params }) {
                     <div className="text-slate-500 text-sm">{frontmatter.location_address}</div>
                   )}
                 </div>
-                {frontmatter.location_url && (
+                {mapsUrl && (
                   <a 
-                    href={frontmatter.location_url}
+                    href={mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-6 py-2 bg-slate-100 text-slate-900 rounded-full text-xs font-bold hover:bg-slate-200 transition-colors"

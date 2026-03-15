@@ -13,7 +13,7 @@ cover_image_alt: 秋波名曲珈琲的外觀紅底招牌
 date: '2026-03-13'
 location_name: 秋波名曲珈琲
 location_address: 103台北市大同區昌吉街218號
-location_url: https://maps.app.goo.gl/9uT5mJ9p3XqL4Z7fA
+location_url: 'https://www.google.com/maps/search/?api=1&query=%E7%A7%8B%E6%B3%A2%E5%90%8D%E6%9B%B2%E7%8F%88%E7%90%B2%20103%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%90%8C%E5%8D%80%E6%98%8C%E5%90%89%E8%A1%97218%E8%99%9F'
 ---
 
 在大同區昌吉街的轉角，**秋波名曲珈琲**以其標誌性的紅底金字招牌，靜靜地守候著那段被遺忘的時光。這裡不僅僅提供咖啡，更提供一種沈浸式的昭和氛圍。
