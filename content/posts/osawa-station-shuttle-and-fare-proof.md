@@ -11,9 +11,9 @@ tags:
 cover_image: /uploads/20260314-osawa-shuttle-1.jpg
 cover_image_alt: 里山十帖接駁車在大澤站外等候
 date: '2026-03-14'
-location_name: JR 大澤站 (Osawa Station)
-location_address: 新潟県南魚沼市大沢
-location_url: 'https://www.google.com/maps/search/?api=1&query=JR%20%E5%A4%A7%E6%BE%A4%E7%AB%99%20(Osawa%20Station)%20%E6%96%B0%E6%BD%9F%E7%9C%8C%E5%8D%97%E9%AD%9A%E6%B2%BC%E5%B8%82%E5%A4%A7%E6%B2%A2'
+location_name: 大澤（新潟）
+location_address: Ōsawa, Minamiuonuma-shi, Niigata-ken 949-6361, Japan
+location_url: 'https://www.google.com/maps/place/%E5%A4%A7%E6%BE%A4%EF%BC%88%E6%96%B0%E6%BD%9F%EF%BC%89/@37.0212004,138.821292,17z'
 ---
 
 ## 車站外的溫暖等待
