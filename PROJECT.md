@@ -89,16 +89,21 @@
 ---
 
 ## Next（下一步）
-1. **地圖功能強化**：
+1. **Chapter 編輯器強化（v2）**：
+   - [ ] 新增 `new chapter 主題：XXX` / `追加 page：YYY` 的對話命令解析與 server action 串接。
+   - [ ] Chapter 編輯頁加入「依 title/slug/URL 智慧匹配」與候選 disambiguation。
+2. **地圖功能強化**：
    - [ ] 串接正式 Google Maps API Key（目前為預留區塊）。
    - [ ] 在 Chapter 頁面實現互動式地圖（Mapbox 或 Google Maps JS SDK）。
-2. **內容組織優化 (Folder-per-Page)**：
+3. **內容組織優化 (Folder-per-Page)**：
    - [ ] 實作圖片儲存重構：未來新文章的圖片需存放在 `public/uploads/{slug}/` 資料夾下，而非散落在 `uploads/` 根目錄。
    - [ ] 更新 `EDITING_SKILL.md` 規範 Agent 在起草時自動建立對應資料夾並移動檔案。
 
 ---
 
 ## 變更紀錄
+- 2026-03-15：新增 Chapter Studio 編輯頁 ` /studio/chapter `（含密碼保護、儲存、預覽、Page 搜尋追加、去重、排序與移除）。支援以 `?saved={slug}` 讀取既有 chapter，並新增 `saveChapterAction` 串接 `saveChapter`。
+- 2026-03-15：擴充 Chapter frontmatter schema（`summary`, `cover_image`, `cover_image_alt`），並新增 `listAllChapters()` 統一章節讀取流程；`/api/chapters` 改用 content utility，避免重複實作。
 - 2026-03-15：修正 Studio「查看預覽 ↗」按鈕在深色模式的可視性。移除行內暗底樣式改為 `previewButton` class，統一白字深底，並補上 `:visited/:active/:focus` 顏色繼承避免連結狀態導致文字變暗。
 - 2026-03-15：更新 `EDITING_SKILL.md` 連結回報規範。未來回覆 Gore 時需提供可直接點擊的正式站完整網址（`https://chat-blog-silk.vercel.app/`），不得僅提供相對路徑。
 - 2026-03-15：新增頁面 `hakkaisan-yukimuro-tour`（八海山雪室）。完成魚沼之里雪中貯蔵庫見學內容起草、三張現場照片整理至 `public/uploads/hakkaisan-yukimuro-tour/`、補齊 location frontmatter，並通過 `scripts/validate-content.js`。

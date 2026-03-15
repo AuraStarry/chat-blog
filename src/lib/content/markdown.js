@@ -166,6 +166,9 @@ export async function saveChapter(input) {
     title: input.title,
     slug,
     status: input.status || PAGE_STATUS.DRAFT,
+    summary: input.summary,
+    cover_image: input.cover_image,
+    cover_image_alt: input.cover_image_alt,
     date: input.date || new Date().toISOString().slice(0, 10),
     pages: input.pages || input.posts || [],
   });
@@ -210,6 +213,22 @@ export async function readChapterBySlug(slug) {
     content: parsed.content,
     pages: pagesData.filter(Boolean),
   };
+}
+
+export async function listAllChapters() {
+  await fs.mkdir(CHAPTERS_DIR, { recursive: true });
+  const files = await fs.readdir(CHAPTERS_DIR);
+  const mdFiles = files.filter((f) => f.endsWith(".md"));
+
+  const chapters = await Promise.all(
+    mdFiles.map(async (filename) => {
+      const raw = await fs.readFile(path.join(CHAPTERS_DIR, filename), "utf8");
+      const parsed = matter(raw);
+      return normalizeChapterFrontmatter(parsed.data);
+    })
+  );
+
+  return chapters.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
 // Backward-compatible aliases

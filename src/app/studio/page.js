@@ -61,6 +61,15 @@ export default async function StudioPage({ searchParams }) {
         <section className={styles.card}>
           <h1 className={styles.title}>chat-blog 共編區（v1）</h1>
           <p className={styles.note}>手機優先、單欄、UI 編輯；底層自動寫回 Markdown。</p>
+          <div style={{ marginTop: 12 }}>
+            <a
+              href="/studio/chapter"
+              className={styles.button}
+              style={{ background: "#27272a", color: "#fafafa", border: "1px solid #3f3f46", padding: "8px 12px", fontSize: 13 }}
+            >
+              進入 Chapter 編輯器
+            </a>
+          </div>
         </section>
 
         {saved ? (
