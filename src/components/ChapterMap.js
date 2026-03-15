@@ -6,6 +6,20 @@ export default function ChapterMap({ locations }) {
   const mapRef = useRef(null);
   const [error, setError] = useState(null);
   const [activeLoc, setActiveLoc] = useState(null);
+
+  const handleJumpToPost = (slug) => {
+    if (typeof window === 'undefined' || !slug) return;
+
+    const target = document.getElementById(slug);
+    if (!target) return;
+
+    if (target.tagName.toLowerCase() === 'details') {
+      target.open = true;
+    }
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setActiveLoc(null);
+  };
   const [markerCount, setMarkerCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef(null);
@@ -278,7 +292,16 @@ export default function ChapterMap({ locations }) {
                   <h4 className="text-sm font-bold text-slate-900 leading-tight">{activeLoc.title}</h4>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <a href={`#${activeLoc.slug}`} onClick={() => setActiveLoc(null)} className="bg-slate-900 text-white py-3 rounded-xl text-xs font-bold text-center">跳轉到段落</a>
+                  <a
+                    href={`#${activeLoc.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleJumpToPost(activeLoc.slug);
+                    }}
+                    className="bg-slate-900 text-white py-3 rounded-xl text-xs font-bold text-center"
+                  >
+                    跳轉到段落
+                  </a>
                   <a href={activeLoc.url} target="_blank" rel="noopener noreferrer" className="bg-slate-100 text-slate-600 py-2.5 rounded-xl text-xs font-bold text-center">Google Maps ↗</a>
                 </div>
               </div>

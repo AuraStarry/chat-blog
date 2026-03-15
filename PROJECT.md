@@ -99,6 +99,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-15：優化 Chapter 資訊卡「跳轉到段落」互動。點擊按鈕後會先自動展開對應 `details` 區塊，再 smooth scroll 到該段落，避免跳轉後仍維持折疊狀態。
 - 2026-03-15：Chapter 地圖插針樣式調整。`src/components/ChapterMap.js` 將客製黑點（SymbolPath.CIRCLE）改為 Google Maps 預設 Marker pin，保留既有點擊插針開啟資訊卡、跳轉段落與外連 Google Maps 的互動。
 - 2026-03-15：修復 Post / Chapter 的 Google Maps 外連穩定性。新增 `src/lib/googleMaps.js`，對 `maps.app.goo.gl` / `goo.gl/maps` 轉導短連結自動轉換為 `google.com/maps/search` 直連；同步更新既有文章 frontmatter 的 `location_url`，並在 `EDITING_SKILL.md` 明確禁止使用轉導短網址。
 - 2026-03-01：建立 `chat-blog/PROJECT.md`，整理並凍結目前已確認需求；明確標註暫不建立程式環境，等待下一步架構討論。
