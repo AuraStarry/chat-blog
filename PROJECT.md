@@ -99,6 +99,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-15：修正 Studio「查看預覽 ↗」按鈕在深色模式的可視性。移除行內暗底樣式改為 `previewButton` class，統一白字深底，並補上 `:visited/:active/:focus` 顏色繼承避免連結狀態導致文字變暗。
 - 2026-03-15：更新 `EDITING_SKILL.md` 連結回報規範。未來回覆 Gore 時需提供可直接點擊的正式站完整網址（`https://chat-blog-silk.vercel.app/`），不得僅提供相對路徑。
 - 2026-03-15：新增頁面 `hakkaisan-yukimuro-tour`（八海山雪室）。完成魚沼之里雪中貯蔵庫見學內容起草、三張現場照片整理至 `public/uploads/hakkaisan-yukimuro-tour/`、補齊 location frontmatter，並通過 `scripts/validate-content.js`。
 - 2026-03-15：新增編輯規範分層機制。`EDITING_SKILL.md` 明確定義「全域規範 + 個人 profile」架構，新增 `editing-profiles/gore.md` 與 `editing-profiles/hazel.md`；並加入規則：未來提出 editing 規範異動時，Agent 必須先確認是全域專案規範或個人規範後才可修改。

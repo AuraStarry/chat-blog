@@ -70,8 +70,7 @@ export default async function StudioPage({ searchParams }) {
               href={`/page/${saved}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.button}
-              style={{ padding: "4px 12px", fontSize: "12px", background: "#1e1e2e", border: "1px solid #313244" }}
+              className={`${styles.button} ${styles.previewButton}`}
             >
               查看預覽 ↗
             </a>

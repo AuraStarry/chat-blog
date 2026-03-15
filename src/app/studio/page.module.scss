@@ -88,9 +88,23 @@
   align-items: center;
   justify-content: center;
 
+  &:visited,
+  &:active,
+  &:focus {
+    color: inherit;
+  }
+
   &:hover {
     opacity: 0.9;
   }
+}
+
+.previewButton {
+  padding: 6px 12px;
+  font-size: 12px;
+  background: #27272a;
+  border: 1px solid #3f3f46;
+  color: #fafafa;
 }
 
 .note {
