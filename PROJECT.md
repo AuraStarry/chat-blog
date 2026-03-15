@@ -99,6 +99,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-15：新增編輯規範分層機制。`EDITING_SKILL.md` 明確定義「全域規範 + 個人 profile」架構，新增 `editing-profiles/gore.md` 與 `editing-profiles/hazel.md`；並加入規則：未來提出 editing 規範異動時，Agent 必須先確認是全域專案規範或個人規範後才可修改。
 - 2026-03-15：全案將「post」概念更名為「page」。新增 `/page/[slug]` 路由與 `/api/pages` 介面、Studio/首頁/Chapter 改用 page 命名；`/post/[slug]` 保留 redirect；內容檔案移至 `content/pages/`，並保持 `content/posts/` fallback 以兼容舊資料。完成 `validate-content` 驗證。
 - 2026-03-15：修正 Chapter 地圖在手機版高度未填滿容器的視覺破版。將地圖容器改為 `h-[300px]`（桌面維持 `md:aspect-[16/10]`），並把地圖掛載節點改為 `absolute inset-0`，確保地圖圖層可完整貼齊容器高度。
 - 2026-03-15：移除 Chapter 地圖除錯殘留。清除 `page.js` 的 `[Debug] Map Active` 與隱藏 debug counter，並移除 `ChapterMap.js` 內大量 `console.log/console.warn` 與 key 指紋診斷邏輯，保留正式運行所需流程與錯誤訊息顯示。
