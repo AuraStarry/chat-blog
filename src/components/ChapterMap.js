@@ -123,7 +123,6 @@ export default function ChapterMap({ locations }) {
         const LatLngBoundsClass = mapsLib.LatLngBounds || maps.LatLngBounds;
         const GeocoderClass = geocodingLib.Geocoder || maps.Geocoder;
         const MarkerClass = mapsLib.Marker || maps.Marker;
-        const SymbolPathEnum = mapsLib.SymbolPath || maps.SymbolPath;
 
         console.log('[ChapterMap] Constructor check:', {
           Map: typeof MapClass,
@@ -186,14 +185,6 @@ export default function ChapterMap({ locations }) {
             const marker = new MarkerClass({
               position: loc.position,
               map: mapInstance,
-              icon: {
-                path: SymbolPathEnum.CIRCLE,
-                fillColor: '#0f172a',
-                fillOpacity: 1,
-                strokeWeight: 2,
-                strokeColor: '#ffffff',
-                scale: 8,
-              }
             });
 
             marker.addListener('click', () => {
