@@ -130,12 +130,15 @@ export async function readPageBySlug(slug) {
 }
 
 export async function listAllPages() {
-  await fs.mkdir(PAGES_DIR, { recursive: true });
-  await fs.mkdir(LEGACY_POSTS_DIR, { recursive: true });
-
   const [pageFiles, legacyFiles] = await Promise.all([
-    fs.readdir(PAGES_DIR),
-    fs.readdir(LEGACY_POSTS_DIR),
+    fs.readdir(PAGES_DIR).catch((error) => {
+      if (error?.code === "ENOENT") return [];
+      throw error;
+    }),
+    fs.readdir(LEGACY_POSTS_DIR).catch((error) => {
+      if (error?.code === "ENOENT") return [];
+      throw error;
+    }),
   ]);
 
   const allMdFiles = [...new Set([...pageFiles, ...legacyFiles])].filter((f) =>
@@ -216,8 +219,10 @@ export async function readChapterBySlug(slug) {
 }
 
 export async function listAllChapters() {
-  await fs.mkdir(CHAPTERS_DIR, { recursive: true });
-  const files = await fs.readdir(CHAPTERS_DIR);
+  const files = await fs.readdir(CHAPTERS_DIR).catch((error) => {
+    if (error?.code === "ENOENT") return [];
+    throw error;
+  });
   const mdFiles = files.filter((f) => f.endsWith(".md"));
 
   const chapters = await Promise.all(
