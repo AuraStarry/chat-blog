@@ -32,6 +32,8 @@ export const pageFrontmatterSchema = z.object({
   tags: coerceStringArray.default([]),
   cover_image: z.string().trim().default(""),
   cover_image_alt: z.string().trim().default(""),
+  lead_authors: z.string().trim().default(""),
+  author: z.string().trim().optional(),
   date: dateCoerce,
   location_name: z.string().trim().default(""),
   location_address: z.string().trim().default(""),

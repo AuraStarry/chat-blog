@@ -17,6 +17,7 @@ export async function createDraftAction(formData) {
       tags: formData.get("tags"),
       cover_image: formData.get("cover_image"),
       cover_image_alt: formData.get("cover_image_alt"),
+      lead_authors: formData.get("lead_authors"),
       location_name: formData.get("location_name"),
       location_address: formData.get("location_address"),
       location_url: formData.get("location_url"),

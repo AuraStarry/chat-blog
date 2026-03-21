@@ -16,6 +16,24 @@ const CHAPTERS_DIR = path.join(process.cwd(), "content", "chapters");
 
 const IS_GIT_CMS = !!process.env.GITHUB_TOKEN;
 
+function resolveDefaultLeadAuthors() {
+  const candidates = [
+    process.env.OPENCLAW_AGENT,
+    process.env.OPENCLAW_AGENT_ID,
+    process.env.AGENT,
+    process.env.AGENT_ID,
+    process.env.CLAW_AGENT,
+    process.env.CLAW_AGENT_ID,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  if (candidates.includes("hazel")) return "Hazel";
+  if (candidates.includes("gore")) return "Gore";
+  return "Gore";
+}
+
 function ensureMdExtension(filename) {
   return filename.endsWith(".md") ? filename : `${filename}.md`;
 }
@@ -38,6 +56,7 @@ export function buildDefaultDraft() {
     tags: [],
     cover_image: "",
     cover_image_alt: "",
+    lead_authors: resolveDefaultLeadAuthors(),
     date: new Date().toISOString().slice(0, 10),
     content: "",
   };
@@ -74,6 +93,8 @@ export async function saveDraftFromForm(input) {
     tags: input.tags,
     cover_image: input.cover_image,
     cover_image_alt: input.cover_image_alt,
+    lead_authors: input.lead_authors || input.author || resolveDefaultLeadAuthors(),
+    author: input.author,
     location_name: input.location_name,
     location_address: input.location_address,
     location_url: input.location_url,

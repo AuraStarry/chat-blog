@@ -24,6 +24,7 @@ export default async function StudioPage({ searchParams }) {
     tags: "",
     cover_image: "",
     cover_image_alt: "",
+    lead_authors: "Gore",
     location_name: "",
     location_address: "",
     location_url: "",
@@ -43,6 +44,13 @@ export default async function StudioPage({ searchParams }) {
         tags: page.frontmatter.tags?.join(", ") || "",
         cover_image: page.frontmatter.cover_image || "",
         cover_image_alt: page.frontmatter.cover_image_alt || "",
+        lead_authors:
+          page.frontmatter.lead_authors ||
+          (page.frontmatter.author === "hazel"
+            ? "Hazel"
+            : page.frontmatter.author === "gore"
+              ? "Gore"
+              : "Gore"),
         location_name: page.frontmatter.location_name || "",
         location_address: page.frontmatter.location_address || "",
         location_url: page.frontmatter.location_url || "",

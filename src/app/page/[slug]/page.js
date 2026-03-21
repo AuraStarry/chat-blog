@@ -64,6 +64,13 @@ export default async function PageDetail({ params }) {
 
   const { frontmatter, content } = page;
   const htmlContent = await renderMarkdown(content);
+  const leadAuthors =
+    frontmatter.lead_authors ||
+    (frontmatter.author === "hazel"
+      ? "Hazel"
+      : frontmatter.author === "gore"
+        ? "Gore"
+        : "");
   const mapsUrl = normalizeGoogleMapsUrl(
     frontmatter.location_url,
     frontmatter.location_name,
@@ -85,6 +92,10 @@ export default async function PageDetail({ params }) {
           <h1 className="text-3xl md:text-5xl font-bold mb-8 tracking-tight leading-tight text-slate-900">
             {frontmatter.title}
           </h1>
+
+          {leadAuthors && (
+            <p className="text-sm text-slate-500 mb-8">主筆人：{leadAuthors}</p>
+          )}
 
           {frontmatter.summary && !frontmatter.title.includes(frontmatter.summary) && (
             <p className="text-lg md:text-xl text-slate-500 leading-relaxed font-serif italic mb-10 border-l-2 border-slate-100 pl-6">

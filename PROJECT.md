@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-21：Studio 與 Page 新增「主筆人」欄位。`/studio` 可用單一文字輸入主筆人（支援複數，如 `Gore, Hazel`），儲存為 frontmatter `lead_authors` 並顯示於 `/page/[slug]` 內容頁；同時保留舊 `author` 欄位相容邏輯，且儲存時會依建立來源自動預設 Gore/Hazel（未知時預設 Gore）。
 - 2026-03-21：更新頁面 `chafeng-garden-cafe`（Garden Cafe - 茶楓）。新增窗邊餐點與庭園同框照片至「城市與自然的對話」段落，並加入檔案 `public/uploads/chafeng-garden-cafe/02.jpg`。
 - 2026-03-21：更新 `editing-profiles/gore.md`。新增 Gore 個人「附加資料引用模式」規範：最多三張卡片、動態插入不綁位置、標題格式、去重檢查與長度控制，並補上可複用模板。
 - 2026-03-21：微調引述卡片排版與引號行為。將卡片標題改為獨立首行（置於裝飾開引號之下），並於 `globals.css` 強制移除 `blockquote p::before/::after`，避免整段文字被預設引號包夾。

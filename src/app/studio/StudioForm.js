@@ -91,6 +91,18 @@ export default function StudioForm({ initialData, saveAction, pageStatusConstant
           </div>
 
           <div>
+            <label className={styles.label} htmlFor="lead_authors">主筆人</label>
+            <input
+              className={styles.input}
+              id="lead_authors"
+              name="lead_authors"
+              placeholder="例如：Gore, Hazel"
+              defaultValue={initialData.lead_authors}
+            />
+            <p className={styles.note} style={{ marginTop: "4px" }}>可自由輸入，支援複數主筆人。</p>
+          </div>
+
+          <div>
             <label className={styles.label} htmlFor="content">內文（Markdown）</label>
             <textarea className={styles.textarea} id="content" name="content" placeholder="# 標題\n\n開始寫你的內容..." defaultValue={initialData.content} style={{ minHeight: "300px" }} />
           </div>
