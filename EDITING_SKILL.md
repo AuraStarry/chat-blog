@@ -45,6 +45,10 @@
 - **summary**：100 字以內的摘要，需包含核心關鍵字以利 AI 打撈。
 - **status**：預設為 `published`。
 - **author**：可選；若填寫，僅允許 `gore` 或 `hazel`，用於套用對應個人 profile。
+- **lead_authors（主筆人）**：文字欄位，顯示於 page 內容頁，支援自由輸入與複數（例如 `Gore, Hazel`）。
+  - 新建 page 時，若未提供 `lead_authors`，預設需依創建 page 的 agent 自動填入：`gore → Gore`、`hazel → Hazel`。
+  - 若無法判斷 agent，預設填 `Gore`。
+  - 為兼容舊資料，若舊文僅有 `author: gore/hazel` 且無 `lead_authors`，可對應顯示為 `Gore/Hazel`。
 - **date**：使用 `YYYY-MM-DD` 格式。**務必加上單引號包裹**（例如 `'2026-03-13'`），防止 YAML 解析器將其誤認為 Date 物件而導致系統崩潰。
 
 ## 8. 穩定性防禦（穩定規格關鍵）
