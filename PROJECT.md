@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-21：依 Gore 新增之「原文改寫強度規則」，重構頁面 `kotobukiyu-iyoshi-cola-vs-off-cola` 內文：回退大幅語意改寫，改為保留原始敘事脈絡、僅做段落化與校稿優化。
 - 2026-03-21：更新 `editing-profiles/gore.md`。新增「原文改寫強度規則」：若原文已完整則僅段落化＋校稿優化，若為碎片筆記則可在核心不變下補完成完整敘事。
 - 2026-03-21：新增頁面 `kotobukiyu-iyoshi-cola-vs-off-cola`（壽湯｜伊良可樂 vs OFF COLA）。完成 Gore 提供之泡湯與飲品素材重寫、四張照片整理至 `public/uploads/kotobukiyu-iyoshi-cola-vs-off-cola/`、補齊地點 frontmatter，並通過 `scripts/validate-content.js`。
 - 2026-03-21：Studio 與 Page 新增「主筆人」欄位。`/studio` 可用單一文字輸入主筆人（支援複數，如 `Gore, Hazel`），儲存為 frontmatter `lead_authors` 並顯示於 `/page/[slug]` 內容頁；同時保留舊 `author` 欄位相容邏輯，且儲存時會依建立來源自動預設 Gore/Hazel（未知時預設 Gore）。
