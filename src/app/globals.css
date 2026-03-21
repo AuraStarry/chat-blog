@@ -34,3 +34,14 @@ body {
 .chapter-map-shell .gm-style img {
   max-width: none !important;
 }
+
+/* Quote card typography cleanup */
+.prose blockquote p::before,
+.prose blockquote p::after {
+  content: none !important;
+}
+
+.prose blockquote p:first-child strong:first-child {
+  display: inline-block;
+  margin-top: 0.15rem;
+}
