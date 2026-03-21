@@ -12,15 +12,15 @@ const geistMono = Geist_Mono({
 });
 
 const siteUrl = "https://chat-blog-silk.vercel.app";
-const siteName = "chat-blog";
-const defaultTitle = "chat-blog | Gore & Aura's shared digital garden";
-const defaultDescription = "A mobile-first travel and life journal by Gore & Aura, with pages and chapter playlists mapped to real places.";
+const siteName = "高黑的冒險筆記";
+const defaultTitle = "高黑的冒險筆記 | Gore & Hazel shared digital garden";
+const defaultDescription = "A mobile-first travel and life journal by Gore & Hazel, with pages and chapter playlists mapped to real places.";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: defaultTitle,
-    template: "%s | chat-blog",
+    template: "%s | 高黑的冒險筆記",
   },
   description: defaultDescription,
   applicationName: siteName,

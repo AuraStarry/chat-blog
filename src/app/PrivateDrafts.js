@@ -1,17 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
 export default function PrivateDrafts({ pages }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
+  const [isAuthenticated] = useState(() => {
+    if (typeof window === "undefined") return false;
     const password = localStorage.getItem("studio_password");
-    if (password && /^[\u4e00-\u9fa5]{3}$/.test(password)) {
-      setIsAuthenticated(true);
-    }
-  }, []);
+    return Boolean(password && /^[\u4e00-\u9fa5]{3}$/.test(password));
+  });
 
   if (!isAuthenticated || pages.length === 0) return null;
 

@@ -2,6 +2,7 @@ import { readChapterBySlug, renderMarkdown } from "@/lib/content/markdown";
 import { normalizeGoogleMapsUrl } from "@/lib/googleMaps";
 import { notFound } from "next/navigation";
 import ChapterMapClient from "@/components/ChapterMapClient";
+import SiteHeaderBadge from "@/components/SiteHeaderBadge";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -97,6 +98,8 @@ export default async function ChapterPage({ params }) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20">
       <div className="max-w-2xl mx-auto px-4 py-12 md:py-20">
+        <SiteHeaderBadge className="mb-6" />
+
         <header className="mb-12">
           <h1 className="text-4xl font-black mb-4 tracking-tight">{frontmatter.title}</h1>
           <div className="flex items-center text-sm text-slate-500 gap-2 mb-6">

@@ -1,6 +1,7 @@
 import { readPageBySlug, renderMarkdown } from "@/lib/content/markdown";
 import { normalizeGoogleMapsUrl } from "@/lib/googleMaps";
 import { notFound } from "next/navigation";
+import SiteHeaderBadge from "@/components/SiteHeaderBadge";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -72,6 +73,8 @@ export default async function PageDetail({ params }) {
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-900 font-sans">
       <article className="max-w-[700px] mx-auto px-6 py-12 md:py-20">
+        <SiteHeaderBadge className="mb-6" />
+
         <header className="mb-12">
           <div className="flex items-center text-sm text-slate-500 gap-2 mb-6">
             <time dateTime={frontmatter.date}>{frontmatter.date}</time>

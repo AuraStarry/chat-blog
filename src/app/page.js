@@ -4,20 +4,20 @@ import PrivateDrafts from "./PrivateDrafts";
 
 export const metadata = {
   title: "首頁",
-  description: "探索 Gore 與 Aura 的數位花園：精選已發布 pages 與主題 chapter。",
+  description: "探索 Gore 與 Hazel 的數位花園：精選已發布 pages 與主題 chapter。",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "chat-blog | Gore & Aura's shared digital garden",
-    description: "探索 Gore 與 Aura 的數位花園：精選已發布 pages 與主題 chapter。",
+    title: "高黑的冒險筆記 | Gore & Hazel shared digital garden",
+    description: "探索 Gore 與 Hazel 的數位花園：精選已發布 pages 與主題 chapter。", 
     url: "/",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "chat-blog | Gore & Aura's shared digital garden",
-    description: "探索 Gore 與 Aura 的數位花園：精選已發布 pages 與主題 chapter。",
+    title: "高黑的冒險筆記 | Gore & Hazel shared digital garden",
+    description: "探索 Gore 與 Hazel 的數位花園：精選已發布 pages 與主題 chapter。", 
   },
 };
 
@@ -31,8 +31,8 @@ export default async function HomePage() {
       <div className="mx-auto max-w-2xl">
         <header className="mb-12 flex justify-between items-end">
           <div>
-            <h1 className="text-4xl font-bold tracking-tight">chat-blog</h1>
-            <p className="mt-2 text-zinc-500 font-medium">Gore & Aura shared digital garden.</p>
+            <h1 className="text-4xl font-bold tracking-tight">高黑的冒險筆記</h1>
+            <p className="mt-2 text-zinc-500 font-medium">Gore & Hazel shared digital garden.</p>
           </div>
           <Link
             href="/studio"
