@@ -41,7 +41,13 @@ body {
   content: none !important;
 }
 
+.prose blockquote p:first-child {
+  margin-top: 0 !important;
+  margin-bottom: 0.35rem !important;
+}
+
 .prose blockquote p:first-child strong:first-child {
   display: inline-block;
-  margin-top: 0.15rem;
+  margin-top: 0 !important;
+  line-height: 1.3;
 }
