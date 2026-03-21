@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-21：更新頁面 `choraku-shibuya-discount-chinese-surprise`（澀谷兆樂）。在原敘事骨幹不變下，融合「資本巨獸 / 生存死結 / 定錨點 / 極限效率 / 文化地標」分析段落，強化內容深度與時代對照。
 - 2026-03-21：更新頁面 `choraku-shibuya-discount-chinese-surprise`（澀谷兆樂）。追加廚房現場照片至文中「日本中華料理」段落，並新增檔案 `public/uploads/choraku-shibuya-discount-chinese-surprise/03.jpg`，完成驗證後同步 Git。
 - 2026-03-21：新增頁面 `choraku-shibuya-discount-chinese-surprise`（澀谷兆樂）。完成 Gore 提供之素材重寫與結構化、兩張照片整理至 `public/uploads/choraku-shibuya-discount-chinese-surprise/`、補齊地點 frontmatter，並通過 `scripts/validate-content.js`。
 - 2026-03-15：完成首頁 / Page / Chapter 的 SEO 與社群分享 metadata 強化。更新 `src/app/layout.js` 全站預設（metadataBase、canonical、Open Graph、Twitter、robots、title template），並在 `src/app/page/[slug]/page.js`、`src/app/chapter/[slug]/page.js` 新增 `generateMetadata` 以輸出動態 title/description/OG/Twitter（含封面圖、canonical 與 not found noindex）。
