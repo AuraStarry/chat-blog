@@ -112,7 +112,11 @@ export default async function PageDetail({ params }) {
           className="prose prose-lg prose-slate max-w-none
             prose-headings:text-slate-900 prose-headings:font-bold
             prose-p:text-slate-700 prose-p:leading-[1.8] prose-p:mb-6
-            prose-blockquote:border-l-4 prose-blockquote:border-slate-900 prose-blockquote:italic prose-blockquote:text-slate-800
+            prose-blockquote:relative prose-blockquote:not-italic prose-blockquote:text-slate-700
+            prose-blockquote:border prose-blockquote:border-slate-200 prose-blockquote:bg-slate-50/80
+            prose-blockquote:rounded-xl prose-blockquote:px-5 prose-blockquote:py-4 prose-blockquote:my-8
+            prose-blockquote:shadow-[inset_4px_0_0_0_rgba(15,23,42,0.85)]
+            prose-blockquote:before:content-['“'] prose-blockquote:before:text-slate-300 prose-blockquote:before:text-3xl prose-blockquote:before:font-serif prose-blockquote:before:leading-none
             prose-img:rounded-sm prose-img:my-10
             prose-strong:text-slate-900
             font-serif text-[18px] md:text-[21px]"

@@ -102,6 +102,8 @@
 ---
 
 ## 變更紀錄
+- 2026-03-21：調整 Page 詳細頁 blockquote 視覺（`src/app/page/[slug]/page.js`）。新增「卡片式引述區塊」樣式：淡底、圓角、內陰影左側強調線與引號，供附加資料穿插敘事使用。
+- 2026-03-21：更新頁面 `choraku-shibuya-discount-chinese-surprise`（澀谷兆樂）。新增多段「資料引述」穿插於心得段落中，將背景脈絡與主觀體驗並行呈現。
 - 2026-03-21：更新頁面 `choraku-shibuya-discount-chinese-surprise`（澀谷兆樂）。在原敘事骨幹不變下，融合「資本巨獸 / 生存死結 / 定錨點 / 極限效率 / 文化地標」分析段落，強化內容深度與時代對照。
 - 2026-03-21：更新頁面 `choraku-shibuya-discount-chinese-surprise`（澀谷兆樂）。追加廚房現場照片至文中「日本中華料理」段落，並新增檔案 `public/uploads/choraku-shibuya-discount-chinese-surprise/03.jpg`，完成驗證後同步 Git。
 - 2026-03-21：新增頁面 `choraku-shibuya-discount-chinese-surprise`（澀谷兆樂）。完成 Gore 提供之素材重寫與結構化、兩張照片整理至 `public/uploads/choraku-shibuya-discount-chinese-surprise/`、補齊地點 frontmatter，並通過 `scripts/validate-content.js`。
