@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-21：調整 `choraku-shibuya-discount-chinese-surprise`，進一步移除引述卡片內外重複敘事，改為僅保留三張卡片各自完整承載（序文、動線、節目），正文不再重複解釋相同內容。
 - 2026-03-21：再次調整 `choraku-shibuya-discount-chinese-surprise` 引述編排，將原先多段碎片化分類收斂為三段卡片（序文/時代背景、動線設計/效率策略、節目效應/文化地標），讓心得主文更連續。
 - 2026-03-21：修正 Page 引述卡片雙引號問題。於 `src/app/page/[slug]/page.js` 新增 `prose-blockquote-p:before:content-none` 與 `prose-blockquote-p:after:content-none`，移除 Typography 預設段首/段尾引號，保留僅開頭裝飾引號。
 - 2026-03-21：微調頁面 `choraku-shibuya-discount-chinese-surprise` 的引述融合策略。移除「資料引述｜」前綴，改為純分類標題（如時代背景/效率策略），並刪除先前重複塞入正文的分析句，改以引述卡片為主軸，降低碎片感。
