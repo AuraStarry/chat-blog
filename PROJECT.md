@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-21：修正 Page 引述卡片雙引號問題。於 `src/app/page/[slug]/page.js` 新增 `prose-blockquote-p:before:content-none` 與 `prose-blockquote-p:after:content-none`，移除 Typography 預設段首/段尾引號，保留僅開頭裝飾引號。
 - 2026-03-21：微調頁面 `choraku-shibuya-discount-chinese-surprise` 的引述融合策略。移除「資料引述｜」前綴，改為純分類標題（如時代背景/效率策略），並刪除先前重複塞入正文的分析句，改以引述卡片為主軸，降低碎片感。
 - 2026-03-21：調整 Page 詳細頁 blockquote 視覺（`src/app/page/[slug]/page.js`）。新增「卡片式引述區塊」樣式：淡底、圓角、內陰影左側強調線與引號，供附加資料穿插敘事使用。
 - 2026-03-21：更新頁面 `choraku-shibuya-discount-chinese-surprise`（澀谷兆樂）。新增多段「資料引述」穿插於心得段落中，將背景脈絡與主觀體驗並行呈現。
