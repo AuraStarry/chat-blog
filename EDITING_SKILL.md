@@ -92,7 +92,8 @@
 2. **鎖定主題**：優先確認文章主題（Title），建立與 Gore 的共識索引。
 3. **結構配置**：依據此規範規劃標題與章節。
 4. **起草 Draft**：調用 `saveDraftFromForm` 寫入 `content/pages/`。
-5. **回報連結**：必須回傳可直接點擊的正式站完整網址，不可只回傳相對路徑。當前正式站網域為 `https://chat-blog-silk.vercel.app/`，例如：
+5. **完成後 Git 同步（必要）**：只要有內容或資產異動，必須在驗證通過後執行 `git add`、`git commit`、`git push`，確保遠端與部署可見；不得僅停留在本地變更。
+6. **回報連結**：必須回傳可直接點擊的正式站完整網址，不可只回傳相對路徑。當前正式站網域為 `https://chat-blog-silk.vercel.app/`，例如：
    - `https://chat-blog-silk.vercel.app/studio?saved={slug}`
    - `https://chat-blog-silk.vercel.app/page/{slug}`
 

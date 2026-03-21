@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-21：新增頁面 `kotobukiyu-iyoshi-cola-vs-off-cola`（壽湯｜伊良可樂 vs OFF COLA）。完成 Gore 提供之泡湯與飲品素材重寫、四張照片整理至 `public/uploads/kotobukiyu-iyoshi-cola-vs-off-cola/`、補齊地點 frontmatter，並通過 `scripts/validate-content.js`。
 - 2026-03-21：Studio 與 Page 新增「主筆人」欄位。`/studio` 可用單一文字輸入主筆人（支援複數，如 `Gore, Hazel`），儲存為 frontmatter `lead_authors` 並顯示於 `/page/[slug]` 內容頁；同時保留舊 `author` 欄位相容邏輯，且儲存時會依建立來源自動預設 Gore/Hazel（未知時預設 Gore）。
 - 2026-03-21：更新 `EDITING_SKILL.md`，將「主筆人（lead_authors）」納入 Frontmatter 規範：可自由輸入/複數、建立時依 agent（gore/hazel）自動初始化、未知時預設 Gore，並註明舊 `author` 相容對應。
 - 2026-03-21：更新頁面 `chafeng-garden-cafe`（Garden Cafe - 茶楓）。新增窗邊餐點與庭園同框照片至「城市與自然的對話」段落，並加入檔案 `public/uploads/chafeng-garden-cafe/02.jpg`。
