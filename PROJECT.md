@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-21：更新頁面 `chafeng-garden-cafe`（Garden Cafe - 茶楓）。新增窗邊餐點與庭園同框照片至「城市與自然的對話」段落，並加入檔案 `public/uploads/chafeng-garden-cafe/02.jpg`。
 - 2026-03-21：更新 `editing-profiles/gore.md`。新增 Gore 個人「附加資料引用模式」規範：最多三張卡片、動態插入不綁位置、標題格式、去重檢查與長度控制，並補上可複用模板。
 - 2026-03-21：微調引述卡片排版與引號行為。將卡片標題改為獨立首行（置於裝飾開引號之下），並於 `globals.css` 強制移除 `blockquote p::before/::after`，避免整段文字被預設引號包夾。
 - 2026-03-21：調整 `choraku-shibuya-discount-chinese-surprise`，進一步移除引述卡片內外重複敘事，改為僅保留三張卡片各自完整承載（序文、動線、節目），正文不再重複解釋相同內容。
