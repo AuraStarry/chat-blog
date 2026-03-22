@@ -102,6 +102,7 @@
 ---
 
 ## 變更紀錄
+- 2026-03-22：完成 SEO 結構化強化（a+b+c）。新增 `src/app/sitemap.js` 產生動態 sitemap（含首頁、published pages、published chapters），修正 `public/robots.txt` 加入 Sitemap 宣告；新增 JSON-LD 架構（`WebSite` / `BlogPosting` / `CollectionPage + ItemList`）與共用 helper（`src/lib/seo/jsonld.js`、`src/components/JsonLd.js`），並整合到 `layout`、`/page/[slug]`、`/chapter/[slug]`。同時補齊全站與 chapter/page 的預設 OG 圖（`public/og-default.svg`）。
 - 2026-03-21：依 Gore 新增之「原文改寫強度規則」，重構頁面 `kotobukiyu-iyoshi-cola-vs-off-cola` 內文：回退大幅語意改寫，改為保留原始敘事脈絡、僅做段落化與校稿優化。
 - 2026-03-21：更新 `editing-profiles/gore.md`。新增「原文改寫強度規則」：若原文已完整則僅段落化＋校稿優化，若為碎片筆記則可在核心不變下補完成完整敘事。
 - 2026-03-21：新增頁面 `kotobukiyu-iyoshi-cola-vs-off-cola`（壽湯｜伊良可樂 vs OFF COLA）。完成 Gore 提供之泡湯與飲品素材重寫、四張照片整理至 `public/uploads/kotobukiyu-iyoshi-cola-vs-off-cola/`、補齊地點 frontmatter，並通過 `scripts/validate-content.js`。

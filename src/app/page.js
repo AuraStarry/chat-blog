@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { listAllPages } from "@/lib/content/markdown";
 import PrivateDrafts from "./PrivateDrafts";
+import { DEFAULT_OG_IMAGE, toAbsoluteUrl } from "@/lib/seo/site";
 
 export const metadata = {
   title: "首頁",
@@ -10,14 +11,21 @@ export const metadata = {
   },
   openGraph: {
     title: "高黑的冒險筆記 | Gore & Hazel shared digital garden",
-    description: "探索 Gore 與 Hazel 的數位花園：精選已發布 pages 與主題 chapter。", 
+    description: "探索 Gore 與 Hazel 的數位花園：精選已發布 pages 與主題 chapter。",
     url: "/",
     type: "website",
+    images: [
+      {
+        url: toAbsoluteUrl(DEFAULT_OG_IMAGE),
+        alt: "高黑的冒險筆記",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "高黑的冒險筆記 | Gore & Hazel shared digital garden",
-    description: "探索 Gore 與 Hazel 的數位花園：精選已發布 pages 與主題 chapter。", 
+    description: "探索 Gore 與 Hazel 的數位花園：精選已發布 pages 與主題 chapter。",
+    images: [toAbsoluteUrl(DEFAULT_OG_IMAGE)],
   },
 };
 

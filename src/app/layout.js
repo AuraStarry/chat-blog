@@ -1,5 +1,15 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import JsonLd from "@/components/JsonLd";
+import { buildWebsiteJsonLd } from "@/lib/seo/jsonld";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TITLE,
+  SITE_NAME,
+  SITE_URL,
+  toAbsoluteUrl,
+} from "@/lib/seo/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,34 +21,36 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://chat-blog-silk.vercel.app";
-const siteName = "高黑的冒險筆記";
-const defaultTitle = "高黑的冒險筆記 | Gore & Hazel shared digital garden";
-const defaultDescription = "A mobile-first travel and life journal by Gore & Hazel, with pages and chapter playlists mapped to real places.";
-
 export const metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: defaultTitle,
+    default: DEFAULT_TITLE,
     template: "%s | 高黑的冒險筆記",
   },
-  description: defaultDescription,
-  applicationName: siteName,
+  description: DEFAULT_DESCRIPTION,
+  applicationName: SITE_NAME,
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
-    url: siteUrl,
-    siteName,
-    title: defaultTitle,
-    description: defaultDescription,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     locale: "zh_TW",
+    images: [
+      {
+        url: toAbsoluteUrl(DEFAULT_OG_IMAGE),
+        alt: SITE_NAME,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: defaultTitle,
-    description: defaultDescription,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [toAbsoluteUrl(DEFAULT_OG_IMAGE)],
   },
   robots: {
     index: true,
@@ -52,6 +64,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <JsonLd data={buildWebsiteJsonLd()} />
         {children}
       </body>
     </html>

@@ -3,6 +3,9 @@ import { normalizeGoogleMapsUrl } from "@/lib/googleMaps";
 import { notFound } from "next/navigation";
 import ChapterMapClient from "@/components/ChapterMapClient";
 import SiteHeaderBadge from "@/components/SiteHeaderBadge";
+import JsonLd from "@/components/JsonLd";
+import { buildChapterJsonLd } from "@/lib/seo/jsonld";
+import { DEFAULT_OG_IMAGE, toAbsoluteUrl } from "@/lib/seo/site";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -26,20 +29,18 @@ export async function generateMetadata({ params }) {
         title,
         description,
         publishedTime: frontmatter.date,
-        images: frontmatter.cover_image
-          ? [
-              {
-                url: frontmatter.cover_image,
-                alt: frontmatter.cover_image_alt || title,
-              },
-            ]
-          : undefined,
+        images: [
+          {
+            url: frontmatter.cover_image || toAbsoluteUrl(DEFAULT_OG_IMAGE),
+            alt: frontmatter.cover_image_alt || title,
+          },
+        ],
       },
       twitter: {
-        card: frontmatter.cover_image ? "summary_large_image" : "summary",
+        card: "summary_large_image",
         title,
         description,
-        images: frontmatter.cover_image ? [frontmatter.cover_image] : undefined,
+        images: [frontmatter.cover_image || toAbsoluteUrl(DEFAULT_OG_IMAGE)],
       },
     };
   } catch {
@@ -94,9 +95,15 @@ export default async function ChapterPage({ params }) {
       title: p.title,
       slug: p.id,
     }));
+  const chapterJsonLd = buildChapterJsonLd({
+    slug: paramsSlug,
+    frontmatter,
+    pages,
+  });
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20">
+      <JsonLd data={chapterJsonLd} />
       <div className="max-w-2xl mx-auto px-4 py-12 md:py-20">
         <SiteHeaderBadge className="mb-6" />
 

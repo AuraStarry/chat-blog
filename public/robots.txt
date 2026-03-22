@@ -3,3 +3,5 @@ Disallow: /studio
 Allow: /api/content
 Allow: /api/chapters
 Disallow: /api/
+
+Sitemap: https://chat-blog-silk.vercel.app/sitemap.xml

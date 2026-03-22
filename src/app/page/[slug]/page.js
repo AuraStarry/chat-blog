@@ -2,6 +2,9 @@ import { readPageBySlug, renderMarkdown } from "@/lib/content/markdown";
 import { normalizeGoogleMapsUrl } from "@/lib/googleMaps";
 import { notFound } from "next/navigation";
 import SiteHeaderBadge from "@/components/SiteHeaderBadge";
+import JsonLd from "@/components/JsonLd";
+import { buildPageJsonLd } from "@/lib/seo/jsonld";
+import { DEFAULT_OG_IMAGE, toAbsoluteUrl } from "@/lib/seo/site";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -24,20 +27,18 @@ export async function generateMetadata({ params }) {
         title,
         description,
         publishedTime: frontmatter.date,
-        images: frontmatter.cover_image
-          ? [
-              {
-                url: frontmatter.cover_image,
-                alt: frontmatter.cover_image_alt || title,
-              },
-            ]
-          : undefined,
+        images: [
+          {
+            url: frontmatter.cover_image || toAbsoluteUrl(DEFAULT_OG_IMAGE),
+            alt: frontmatter.cover_image_alt || title,
+          },
+        ],
       },
       twitter: {
-        card: frontmatter.cover_image ? "summary_large_image" : "summary",
+        card: "summary_large_image",
         title,
         description,
-        images: frontmatter.cover_image ? [frontmatter.cover_image] : undefined,
+        images: [frontmatter.cover_image || toAbsoluteUrl(DEFAULT_OG_IMAGE)],
       },
     };
   } catch {
@@ -76,9 +77,11 @@ export default async function PageDetail({ params }) {
     frontmatter.location_name,
     frontmatter.location_address
   );
+  const pageJsonLd = buildPageJsonLd({ slug, frontmatter });
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-900 font-sans">
+      <JsonLd data={pageJsonLd} />
       <article className="max-w-[700px] mx-auto px-6 py-12 md:py-20">
         <SiteHeaderBadge className="mb-6" />
 
